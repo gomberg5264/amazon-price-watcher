@@ -2,17 +2,15 @@
 // Defines the User Schema that stores user information
 
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 const uniqueValidator = require('mongoose-unique-validator');
 
-const UserSchema = new Schema({
+const UserSchema = new mongoose.Schema({
   email: {
     type: String,
     lowercase: true,
     unique: true,
     required: [true, "can't be blank"],
-    match: [/\S+@\S+\.\S+/, 'is invalid'],
-    index: true
+    match: [/\S+@\S+\.\S+/, 'is invalid']
   },
   hash: {
     type: String,
