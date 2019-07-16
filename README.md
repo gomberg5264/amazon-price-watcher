@@ -13,8 +13,11 @@ I have still implemented a user structure into the database, etc. but this was c
 
 - Master collection of all watched products or array of nested product documents in user document? Master list grants ease of iteration
   and ensured uniqueness of each product but both the reference ID and the document must be removed when a product is removed from a user's
-  private watchlist. Currently using a "watchers" field to make sure one user removing the product does not remove it if another is still
-  watching.
+  private watchlist. **Currently allowing duplicate products in the master product list**
+
+- Price Heroku Deployment
+
+- Add authorisation/authentication for User model
 
 ## Implementation
 
