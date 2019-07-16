@@ -99,25 +99,25 @@ it is included in any deal going on.
 
 #### /api/users/
 
-- **/**
+- _/_
 
-  - _POST_: Create a user
+  - **POST**: Create a user
 
-- **/:id**
-  - _GET_: Return the JSON of a specific user
-  - _PUT_: Update user data\*
-  - _DELETE_: Delete a specific user
+- _/:id_
+  - **GET**: Return the JSON of a specific user
+  - **PUT**: Update user data\*
+  - **DELETE**: Delete a specific user
 
 #### /api/products/
 
-- **/**
+- _/_
 
-  - _GET_: Used to return all currently watched products
-  - _POST_: Create a new watched product doc
+  - **GET**: Used to return all currently watched products
+  - **POST**: Create a new watched product doc
 
-- **/:id**
-  - _GET_: Return a specific product (used to show user's personal product list)
-  - _PUT_: Update values for a specific product
-  - _DELETE_: Delete a specific product that is being watched\*
+- _/:id_
+  - **GET**: Return a specific product (used to show user's personal product list)
+  - **PUT**: Update values for a specific product
+  - **DELETE**: Delete a specific product that is being watched\*
 
 \* -> Both must be used when a watched item is removed from a user's list.
