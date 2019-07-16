@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 
 // Server app init
 const app = express();
+const routes = require('./routes');
 
 const PORT = process.env.PORT || 5000;
 
@@ -18,6 +19,12 @@ app.use(morgan('combined'));
 
 app.use(bodyParser.urlencoded({ extended: 'true' }));
 app.use(bodyParser.json());
+
+// MongoDB Connection
+require('./config');
+
+// Endpoints
+app.use(routes);
 
 // Dev server
 app.listen(PORT, () => {
