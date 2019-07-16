@@ -14,6 +14,11 @@ module.exports = {
       .then(product => res.status(202).json(product))
       .catch(err => res.status(422).json(err));
   },
+  getAllById: (req, res) => {
+    ProductModel.find({ _id: { $in: req.body.productIdList } })
+      .then(products => res.status(202).json(products))
+      .catch(err => res.status(422).json(err));
+  },
   create: (req, res) => {
     ProductModel.create(req.body)
       .then(product => res.status(201).json(product))

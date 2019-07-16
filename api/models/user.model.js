@@ -20,12 +20,9 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     required: true
   },
-  savedProducts: [
-    {
-      productName: String,
-      productId: String
-    }
-  ]
+  savedProducts: {
+    type: Array
+  }
 });
 
 // Define Unique Validator Plugin

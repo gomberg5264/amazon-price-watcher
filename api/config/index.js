@@ -7,7 +7,7 @@ const URI = process.env.MONGODB_URI;
 
 mongoose.set('useCreateIndex', true);
 
-mongoose.connect(URI, { useNewUrlParser: true });
+mongoose.connect(URI, { useNewUrlParser: true, useFindAndModify: false });
 
 // Success
 mongoose.connection.on('connected', () => {

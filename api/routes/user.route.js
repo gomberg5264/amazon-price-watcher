@@ -12,4 +12,11 @@ router
   .put(userController.update)
   .delete(userController.remove);
 
+router
+  .route('/:id/products')
+  .get(userController.getProductIds)
+  .put(userController.appendProduct);
+
+router.route('/:id/products/:pid').put(userController.removeProduct);
+
 module.exports = router;
