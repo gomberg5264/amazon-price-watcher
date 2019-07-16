@@ -20,7 +20,56 @@ I have still implemented a user structure into the database, etc. but this was c
    and a Products collection, which is a single document with an array of embedded documents. This array is what will be
    updated systematically by our Node service
 
-### To Be Determined:
+#### To Be Determined:
 
 - Hosting service (Heroku for Scheduling Add-on, vs AWS or Now)
 - Best Node scraping modules/method
+
+## Schemas
+
+### Users
+
+```json
+{
+  "_id": ObjectID,
+  "email": {
+    "type": String,
+    "required": true
+  },
+  "hash": {
+    "type": String,
+    "required": true
+  },
+  "enableAlert": {
+    "type": Boolean,
+    "required": true
+  },
+  "savedProducts": [
+    {
+      "productId": String
+    }
+  ]
+}
+```
+
+Each user's document stores the document ID (\_id) of each product currently being watched by that User. The array is then iterated through to collect the
+relevant list of products for the user.
+
+### Products
+
+```json
+{
+  "_id": ObjectId,
+  "url": {
+    "type": String,
+    "required": true
+  },
+  "name": String,
+  "currentPrice": Number,
+  "priceChange": Number,
+  "onSale": Boolean
+}
+```
+
+All product documents will be iterated over by the scraper and updated to store not only the current selling price but the recent change in price and if
+it is included in any deal going on.
