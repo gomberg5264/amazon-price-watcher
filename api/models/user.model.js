@@ -4,6 +4,8 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
+const Product = require('./product.model');
+
 const UserSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -20,9 +22,12 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     required: true
   },
-  savedProducts: {
-    type: Array
-  }
+  savedProducts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product'
+    }
+  ]
 });
 
 // Define Unique Validator Plugin

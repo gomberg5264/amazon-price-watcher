@@ -14,7 +14,7 @@ router
 
 router
   .route('/:id/products')
-  .get(userController.getProductIds)
+  .get(userController.getProducts)
   .put(userController.appendProduct);
 
 router.route('/:id/products/:pid').put(userController.removeProduct);

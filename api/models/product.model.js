@@ -16,12 +16,10 @@ const ProductSchema = new mongoose.Schema({
     ]
   },
   name: {
-    type: String,
-    required: true
+    type: String
   },
   currentPrice: {
-    type: Number,
-    required: true
+    type: Number
   },
   priceChange: Number,
   onSale: Boolean

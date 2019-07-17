@@ -1,48 +1,61 @@
 // controllers/user.controller.js
 // Handles all CRUD operations on the User Model
 
-const UserModel = require('../models/user.model');
+const User = require('../models/user.model');
 
 module.exports = {
-  // Get a user's info based on uid
+  // GET
   getById: (req, res) => {
-    UserModel.findById(req.params.id)
+    User.findById(req.params.id)
       .then(user => res.status(202).json(user))
       .catch(err => res.status(422).json(err));
   },
-  getProductIds: (req, res) => {
-    UserModel.findById(req.params.id, 'savedProducts')
+  getProducts: (req, res) => {
+    User.findById(req.params.id, 'savedProducts')
+      .populate('savedProducts')
       .then(productArray => res.status(202).json(productArray))
       .catch(err => res.status(422).json(err));
   },
+
+  // POST
+  create: (req, res) => {
+    User.create(req.body)
+      .then(user => res.status(201).json(user))
+      .catch(err => res.status(422).json(err));
+  },
+
+  // PUT
   appendProduct: (req, res) => {
-    UserModel.findByIdAndUpdate(
+    User.findByIdAndUpdate(
       req.params.id,
       {
         $push: { savedProducts: req.body.productId }
       },
       { safe: true, upsert: true, new: true }
     )
-      .then(savedProduct => res.status(201).json(savedProduct))
-      .catch(err => res.status(422).json(err));
-  },
-  // Insert new User document
-  create: (req, res) => {
-    UserModel.create(req.body)
-      .then(user => res.status(201).json(user))
+      .then(updatedUser => res.status(201).json(updatedUser))
       .catch(err => res.status(422).json(err));
   },
   update: (req, res) => {
-    UserModel.findByIdAndUpdate(req.params.id, req.body)
+    User.findByIdAndUpdate(req.params.id, req.body)
       .then(updatedUser => res.status(202).json(updatedUser))
       .catch(err => res.status(422).json(err));
   },
   removeProduct: (req, res) => {
-    // ! Implement removing product from user product list
-    console.log('PLACEHOLDER');
+    User.findByIdAndUpdate(
+      req.params.id,
+      {
+        $pull: { savedProducts: { $in: [req.params.pid] } }
+      },
+      { new: true, safe: true }
+    )
+      .then(updatedUser => res.status(202).json(updatedUser))
+      .catch(err => res.status(422).json(err));
   },
+
+  // DELETE
   remove: (req, res) => {
-    UserModel.findByIdAndRemove(req.params.id)
+    User.findByIdAndRemove(req.params.id)
       .then(removed => res.status(202).json(removed))
       .catch(err => res.status(422).json(err));
   }

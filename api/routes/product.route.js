@@ -14,3 +14,5 @@ router
   .get(productController.getById)
   .put(productController.update)
   .delete(productController.remove);
+
+module.exports = router;
