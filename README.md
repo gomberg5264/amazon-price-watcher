@@ -15,20 +15,21 @@ I have still implemented a user structure into the database, etc. but this was c
   and ensured uniqueness of each product but both the reference ID and the document must be removed when a product is removed from a user's
   private watchlist. **Currently allowing duplicate products in the master product list**
 
-- Price Heroku Deployment
-
 - Add authorisation/authentication for User model
+
+- Single endpoint that manages user product deletion from private and master list
 
 ## Implementation
 
 1. Using an Express.js API to handle all calls to the MongoDB database.
 
-2. Node service that utilises the ScraperAPI microservice to scrape given product prices every 12 hours (scheduling method TBD).
-   The watched products will be refreshed all at once at a specific PST time (can be optimised for scalability)
+2. Node service that utilises the ScraperAPI microservice to scrape given product prices every 24 hours (see #4)
 
 3. MongoDB database with a Users collection and stores documents on user info (i.e. authentication and saved products),
    and a Products collection, which is a single document with an array of embedded documents. This array is what will be
    updated systematically by our Node service.
+
+4. Heroku Scheduler is utilised on a Heroku deployment to make sure all products are scraped daily (12:00am UTC). The "scraper" dir holds all scripts currently on the Heroku deployment
 
 #### To Be Determined:
 
