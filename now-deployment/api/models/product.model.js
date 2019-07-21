@@ -4,7 +4,7 @@
 const mongoose = require('mongoose');
 //const uniqueValidator = require('mongoose-unique-validator');
 
-// !: Currently allowing duplicate URLs in the product list
+// ! Currently allowing duplicate URLs in the product list
 
 const ProductSchema = new mongoose.Schema({
   url: {
@@ -16,13 +16,21 @@ const ProductSchema = new mongoose.Schema({
     ]
   },
   name: {
-    type: String
+    type: String,
+    required: true
   },
   currentPrice: {
-    type: Number
+    type: Number,
+    required: true
   },
-  priceChange: Number,
-  onSale: Boolean
+  priceChange: {
+    type: Number,
+    required: true
+  },
+  onSale: {
+    type: Boolean,
+    required: true
+  }
 });
 
 // Make sure each URL is unique

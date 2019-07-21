@@ -6,13 +6,13 @@ const productController = require('../controllers/product.controller');
 
 router
   .route('/')
-  .get(productController.getAll)
+  //.get(productController.getAll)
   .post(productController.create);
 
 router
   .route('/:id')
   .get(productController.getById)
-  .put(productController.update)
+  //.put(productController.update)
   .delete(productController.remove);
 
 module.exports = router;

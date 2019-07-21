@@ -3,6 +3,8 @@
 
 const Product = require('../models/product.model');
 
+const scraperController = require('../controllers/scraper.controller');
+
 module.exports = {
   getAll: (req, res) => {
     Product.find(req.query)
@@ -14,12 +16,8 @@ module.exports = {
       .then(product => res.status(202).json(product))
       .catch(err => res.status(422).json(err));
   },
-  getAllById: (req, res) => {
-    Product.find({ _id: { $in: req.body.productIdList } })
-      .then(products => res.status(202).json(products))
-      .catch(err => res.status(422).json(err));
-  },
   create: (req, res) => {
+    scraperService.scrapePage(req.body.url);
     Product.create(req.body)
       .then(product => res.status(201).json(product))
       .catch(err => res.status(422).json(err));
