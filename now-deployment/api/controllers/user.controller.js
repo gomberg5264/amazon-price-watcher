@@ -1,62 +1,68 @@
 // controllers/user.controller.js
 // Handles all CRUD operations on the User Model
 
-const User = require('../models/user.model');
+const userService = require('../services/user.service');
 
 module.exports = {
   // GET
-  getById: (req, res) => {
-    User.findById(req.params.id)
-      .then(user => res.status(202).json(user))
+  getAll: (req, res) => {
+    userService
+      .getAll()
+      .then(users => (users ? res.json(users) : res.sendStatus(404)))
       .catch(err => res.status(422).json(err));
   },
+
+  getById: (req, res) => {
+    userService
+      .getById(req.params.id)
+      .then(user => (users ? res.json(user) : res.sendStatus(404)))
+      .catch(err => res.status(422).json(err));
+  },
+
   getProducts: (req, res) => {
-    User.findById(req.params.id, 'savedProducts')
-      .populate('savedProducts')
-      .then(productArray => res.status(202).json(productArray))
+    userService
+      .getProducts(req.params.id)
+      .then(productArray =>
+        productArray ? res.json(productArray) : res.sendStatus(404)
+      )
       .catch(err => res.status(422).json(err));
   },
 
   // POST
   create: (req, res) => {
-    User.create(req.body)
-      .then(user => res.status(201).json(user))
+    userService
+      .create(req.body)
+      .then(newUser => res.status(201).json(newUser))
       .catch(err => res.status(422).json(err));
   },
 
   // PUT
   appendProduct: (req, res) => {
-    User.findByIdAndUpdate(
-      req.params.id,
-      {
-        $push: { savedProducts: req.body.productId }
-      },
-      { safe: true, upsert: true, new: true }
-    )
+    userService
+      .addProduct(req.params.id, req.body.productId)
       .then(updatedUser => res.status(201).json(updatedUser))
       .catch(err => res.status(422).json(err));
   },
+
   update: (req, res) => {
-    User.findByIdAndUpdate(req.params.id, req.body)
+    userService
+      .update(req.params.id, req.body)
       .then(updatedUser => res.status(202).json(updatedUser))
       .catch(err => res.status(422).json(err));
   },
+
   removeProduct: (req, res) => {
-    User.findByIdAndUpdate(
-      req.params.id,
-      {
-        $pull: { savedProducts: { $in: [req.params.pid] } }
-      },
-      { new: true, safe: true }
-    )
+    userService
+      ._removeProduct(req.params.id, req.params.pid)
       .then(updatedUser => res.status(202).json(updatedUser))
       .catch(err => res.status(422).json(err));
   },
 
   // DELETE
   remove: (req, res) => {
-    User.findByIdAndRemove(req.params.id)
-      .then(removed => res.status(202).json(removed))
+    userService
+      ._remove(req.params.id)
+      .then(() => res.status(202).json({}))
       .catch(err => res.status(422).json(err));
   }
 };

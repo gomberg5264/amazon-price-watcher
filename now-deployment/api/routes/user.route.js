@@ -4,7 +4,10 @@
 const router = require('express').Router();
 const userController = require('../controllers/user.controller');
 
-router.route('/').post(userController.create);
+router
+  .route('/')
+  .get(userController.getAll)
+  .post(userController.create);
 
 router
   .route('/:id')
@@ -15,8 +18,8 @@ router
 router
   .route('/:id/products')
   .get(userController.getProducts)
-  .put(userController.appendProduct);
+  .post(userController.appendProduct);
 
-router.route('/:id/products/:pid').put(userController.removeProduct);
+router.route('/:id/products/:pid').delete(userController.removeProduct);
 
 module.exports = router;
