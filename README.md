@@ -33,8 +33,8 @@ I have still implemented a user structure into the database, etc. but this was c
 
 #### To Be Determined:
 
-- Hosting service (Heroku for Scheduling Add-on, vs AWS or Now)
-- Best Node scraping modules/method
+- Move product.service from promise-based to await/async (personal choice)
+- Create script that will be run by Heroku Scheduler (POST request to /api/scrape)
 
 ## Schemas
 
@@ -42,10 +42,12 @@ I have still implemented a user structure into the database, etc. but this was c
 
 ```json
 {
-  "_id": ObjectID,
   "email": {
     "type": String,
-    "required": true
+    "lowercase": true,
+    "unique": true,
+    "required": [true, "can't be blank"],
+    "match": [/\S+@\S+\.\S+/, "is invalid"]
   },
   "hash": {
     "type": String,
@@ -57,7 +59,9 @@ I have still implemented a user structure into the database, etc. but this was c
   },
   "savedProducts": [
     {
-      "productId": String
+      "type": mongoose.Schema.Types.ObjectId,
+      "ref": "Product",
+      "default": []
     }
   ]
 }
@@ -70,47 +74,57 @@ relevant list of products for the user.
 
 ```json
 {
-  "_id": ObjectId,
   "url": {
     "type": String,
     "required": true,
-    "unique": true,
-    "match": [
-      /^https:\/\/www\.amazon\.ca\/.+\/dp\/\w{10}$/g,
-      "is not a valid url"
-    ]
+    "match": [/^https:\/\/www\.amazon\.ca\/.+\/\w{10}$/g, "is not a valid url"]
   },
   "name": {
-    "type": String,
-    "required": true
+    "type": String
   },
   "currentPrice": {
     "type": Number,
-    "required": true
+    "default": 0
   },
-  "priceChange": Number,
-  "onSale": Boolean,
-  "watchers": Number
+  "priceChange": {
+    "type": Number
+  },
+  "onSale": {
+    "type": Boolean
+  }
 }
 ```
 
 All product documents will be iterated over by the scraper and updated to store not only the current selling price but the recent change in price and if
 it is included in any deal going on.
 
-**Important:** Each product document must be unique (can be determined by the url) so as to avoid unnecessary duplicates.
+**Important:** Currently allowing duplicate product documents (MUST DEPRECATE)
 
 ## Routes/Endpoints
 
 #### /api/users/
 
-- _/_
+- _/authenticate_
 
-  - **POST**: Create a user
+  - **POST**: Authenticate a login request
+
+- _/register_
+
+  - **POST**: Create a user document
 
 - _/:id_
+
   - **GET**: Return the JSON of a specific user
-  - **PUT**: Update user data\*
+  - **PUT**: Update user data
   - **DELETE**: Delete a specific user
+
+- _/:id/products_
+
+  - **GET**: Return list of all saved products (populated from IDs)
+  - **POST**: Save ID of new product to watch
+
+- _/:id/products/:pid_
+  - **DELETE**: Remove the product ID from list of saved products\*
 
 #### /api/products/
 
@@ -125,3 +139,13 @@ it is included in any deal going on.
   - **DELETE**: Delete a specific product that is being watched\*
 
 \* -> Both must be used when a watched item is removed from a user's list.
+
+#### /api/scrape
+
+- _/_
+
+  - **POST**: Pinged by scheduled task to updated all watched product documents
+
+- _/:id_
+
+  - **POST**: Refresh a specific product document
