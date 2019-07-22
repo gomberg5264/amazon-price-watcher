@@ -6,6 +6,8 @@ const morgan = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
+const jwt = require('./config/jwt');
+
 // Server app init
 const app = express();
 const routes = require('./routes');
@@ -22,6 +24,9 @@ app.use(bodyParser.json());
 
 // MongoDB Connection
 require('./config');
+
+// use JWT auth to secure the API
+app.use(jwt());
 
 // Endpoints
 app.use(routes);

@@ -29,7 +29,18 @@ module.exports = {
   },
 
   // POST
-  create: (req, res) => {
+  authenticate: (req, res) => {
+    userService
+      .authenticate(req.body)
+      .then(user =>
+        user
+          ? res.json(user)
+          : res.status(400).json({ message: 'Email or password is incorrect' })
+      )
+      .catch(err => res.status(422).json(err));
+  },
+
+  register: (req, res) => {
     userService
       .create(req.body)
       .then(newUser => res.status(201).json(newUser))

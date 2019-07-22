@@ -4,10 +4,12 @@
 const router = require('express').Router();
 const userController = require('../controllers/user.controller');
 
-router
-  .route('/')
-  .get(userController.getAll)
-  .post(userController.create);
+// PUBLIC
+router.route('/authenticate').post(userController.authenticate);
+router.route('/register').post(userController.register);
+
+// PRIVATE
+router.route('/').get(userController.getAll);
 
 router
   .route('/:id')

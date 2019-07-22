@@ -3,22 +3,36 @@
 // Holds all functions used by the controller
 
 const bcrypt = require('bcryptjs');
-
+const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
 
 module.exports = {
-  authenticate: async () => {},
+  authenticate: async ({ email, password }) => {
+    const user = await User.findOne({ email });
+    if (user && bcrypt.compareSync(password, user.hash)) {
+      const { hash, ...userDataWithoutHash } = user.toObject();
+      const token = jwt.sign({ sub: user.id }, process.env.JWT_SECRET);
+      return {
+        ...userDataWithoutHash,
+        token
+      };
+    }
+  },
+
   getAll: async () => {
     return await User.find().select('-hash');
   },
+
   getById: async id => {
     return await User.findById(id).select('-hash');
   },
+
   getProducts: async id => {
     return await User.findById(id)
       .select('savedProducts')
       .populate('savedProducts');
   },
+
   create: async userData => {
     // Validate Info
     if (await User.findOne({ email: userData.email })) {
@@ -31,6 +45,7 @@ module.exports = {
 
     return await user.save();
   },
+
   update: async (id, userData) => {
     const user = await User.findById(id);
 
@@ -51,6 +66,7 @@ module.exports = {
 
     return await user.save();
   },
+
   addProduct: async (id, productId) => {
     return await User.findByIdAndUpdate(
       id,
@@ -60,6 +76,7 @@ module.exports = {
       { safe: true, upsert: true, new: true }
     );
   },
+
   _removeProduct: async (id, productId) => {
     await User.findByIdAndUpdate(
       id,
@@ -69,6 +86,7 @@ module.exports = {
       { new: true, safe: true }
     );
   },
+
   _remove: async id => {
     await User.findOneAndRemove(id);
   }
