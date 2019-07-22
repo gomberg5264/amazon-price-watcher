@@ -10,26 +10,20 @@ const ProductSchema = new mongoose.Schema({
   url: {
     type: String,
     required: true,
-    match: [
-      /^https:\/\/www\.amazon\.ca\/.+\/dp\/\w{10}$/g,
-      'is not a valid url'
-    ]
+    match: [/^https:\/\/www\.amazon\.ca\/.+\/\w{10}$/g, 'is not a valid url']
   },
   name: {
-    type: String,
-    required: true
+    type: String
   },
   currentPrice: {
     type: Number,
-    required: true
+    default: 0
   },
   priceChange: {
-    type: Number,
-    required: true
+    type: Number
   },
   onSale: {
-    type: Boolean,
-    required: true
+    type: Boolean
   }
 });
 

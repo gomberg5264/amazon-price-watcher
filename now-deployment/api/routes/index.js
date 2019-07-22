@@ -8,6 +8,6 @@ const scraperRoutes = require('./scraper.route');
 
 router.use('/api/users', userRoutes);
 router.use('/api/products', productRoutes);
-router.use('/api/scraper', scraperRoutes);
+router.use('/api/scrape', scraperRoutes);
 
 module.exports = router;
