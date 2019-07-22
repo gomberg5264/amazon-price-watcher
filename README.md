@@ -15,9 +15,9 @@ I have still implemented a user structure into the database, etc. but this was c
   and ensured uniqueness of each product but both the reference ID and the document must be removed when a product is removed from a user's
   private watchlist. **Currently allowing duplicate products in the master product list**
 
-- Add authorisation/authentication for User model
+- Move product.service from promise-based to await/async (personal choice)
 
-- Single endpoint that manages user product deletion from private and master list
+- Create script that will be run by Heroku Scheduler (POST request to /api/scrape)
 
 ## Implementation
 
@@ -32,9 +32,6 @@ I have still implemented a user structure into the database, etc. but this was c
 4. Heroku Scheduler is utilised on a Heroku deployment to make sure all products are scraped daily (12:00am UTC). The "scraper" dir holds all scripts currently on the Heroku deployment
 
 #### To Be Determined:
-
-- Move product.service from promise-based to await/async (personal choice)
-- Create script that will be run by Heroku Scheduler (POST request to /api/scrape)
 
 ## Schemas
 
