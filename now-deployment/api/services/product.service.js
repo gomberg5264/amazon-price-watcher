@@ -3,14 +3,14 @@
 const Product = require('../models/product.model');
 
 module.exports = {
-  getAll: query => {
-    return Product.find(query);
+  getAll: async query => {
+    return await Product.find(query);
   },
-  getById: id => {
-    return Product.findById(id);
+  getById: async id => {
+    return await Product.findById(id);
   },
-  updateById: (id, data) => {
-    return Product.findByIdAndUpdate(id, data, {
+  updateById: async (id, data) => {
+    return await Product.findByIdAndUpdate(id, data, {
       new: true,
       upsert: true,
       safe: true

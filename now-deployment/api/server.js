@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 require('./config');
 
 // use JWT auth to secure the API
-app.use(jwt());
+//app.use(jwt());
 
 // Endpoints
 app.use(routes);

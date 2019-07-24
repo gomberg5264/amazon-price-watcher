@@ -6,71 +6,82 @@ const cheerio = require('cheerio');
 
 const SCRAPERAPI_KEY = process.env.SCRAPERAPI_KEY;
 
-const scrapeAndUpdateAll = () => {
-  return new Promise((resolve, reject) => {
-    productService
-      .getAll()
-      .then(products =>
-        Promise.all(products.map(product => scrapeAndUpdateProduct(product)))
-      )
-      .then(updatedProducts => resolve(updatedProducts))
-      .catch(err => reject(err));
-  });
+/**
+ * Iterates through master list of products, then updating each one.
+ * @returns Array of updated products from the database
+ */
+const scrapeAndUpdateAll = async () => {
+  const products = await productService.getAll();
+  const asyncArray = products.map(
+    async product => await scrapeAndUpdateProduct(product)
+  );
+
+  return await Promise.all(asyncArray);
 };
 
-const scrapeAndUpdateById = productId => {
-  return new Promise((resolve, reject) => {
-    productService
-      .getById(productId)
-      .then(product => scrapeAndUpdateProduct(product))
-      .then(updatedProduct => resolve(updatedProduct))
-      .catch(err => reject(err));
-  });
+/**
+ * Updates specfic product document given by productId.
+ * @param {ObjectId} productId Id of particular product's document
+ * @returns Updated product document
+ */
+const scrapeAndUpdateById = async productId => {
+  const product = await productService.getById(productId);
+
+  if (!product) throw 'Product does not exist';
+
+  return await scrapeAndUpdateProduct(product);
 };
 
-const scrapeAndUpdateProduct = product => {
-  return new Promise((resolve, reject) => {
-    const hide = false; // Var for testing purposes only
+/**
+ * Asyncronously scrapes the required Amazon product page and passes the data to be parsed.
+ * @param {Object} product MongoDB document object for the specific product
+ * @returns Updated product document
+ */
+const scrapeAndUpdateProduct = async product => {
+  const hide = false;
+  const scraperUrl = hide
+    ? `http://api.scraperapi.com?api_key=${SCRAPERAPI_KEY}&url=${product.url}`
+    : product.url;
 
-    const scraperUrl = hide
-      ? `http://api.scraperapi.com?api_key=${SCRAPERAPI_KEY}&url=${product.url}`
-      : product.url;
-    axios
-      .get(scraperUrl) // Get product page's HTML
-      .then(res => parseData(product, res.data)) // Scrape the HTML to get necessary updates
-      .then(updates => productService.updateById(product._id, updates)) // Update product document
-      .then(updatedProduct => resolve(updatedProduct)) // Resolve promise on success
-      .catch(err => reject(err)); // Catch and return error back up the chain
-  });
+  const { data } = await axios.get(scraperUrl);
+  const pageData = parseData(product.currentPrice, data);
+
+  return await productService.updateById(product._id, pageData);
 };
 
-const parseData = (product, html) => {
+/**
+ * Extracts required data from Amazon HTML. i.e. change in price, on sale status, etc.
+ * @param {Float} oldPrice currentPrice field of currently non-updated product document
+ * @param {String} html HTML scraped from Amazon product page
+ * @returns {Object} Object containing all extracted data (named identically to document fields)
+ */
+const parseData = (oldPrice, html) => {
   const $ = cheerio.load(html);
 
+  // Product Title
   const name = $('div#titleSection span#productTitle')
     .text()
     .trim();
 
+  // Current Price
   const ourPrice = $('div#price span#priceblock_ourprice').text();
   const dealPrice = $('div#price span#priceblock_dealprice').text();
   let currentPrice = dealPrice ? dealPrice : ourPrice;
 
   currentPrice = parseFloat(currentPrice.replace(/^\D+/g, ''));
 
-  const priceChange =
-    product.currentPrice > 0 ? currentPrice - product.currentPrice : 0;
+  // Price Change
+  const priceChange = oldPrice > 0 ? currentPrice - oldPrice : 0;
 
-  // check for striked out text = on sale
+  // On Sale Status
   const onSale = $('div#price span.a-text-strike').length > 0;
 
-  const updatedData = {
+  return {
     name,
     currentPrice,
     priceChange,
     onSale
   };
-
-  return updatedData;
 };
 
 module.exports = {

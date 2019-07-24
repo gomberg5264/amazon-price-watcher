@@ -3,6 +3,7 @@
 const scraperService = require('../services/scraper.service');
 
 module.exports = {
+  // PUT
   scrapeAndUpdateAll: (req, res) => {
     scraperService
       .scrapeAndUpdateAll()

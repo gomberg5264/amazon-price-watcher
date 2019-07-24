@@ -3,6 +3,9 @@
 const expressJwt = require('express-jwt');
 const userService = require('../services/user.service');
 
+/**
+ * Authenticates routes using ExpressJWT
+ */
 const jwt = () => {
   const secret = process.env.JWT_SECRET;
   return expressJwt({ secret, isRevoked }).unless({
