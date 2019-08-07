@@ -1,8 +1,19 @@
+@import '../../../styles/variables.scss';
+
 .highlight-box {
   display: flex;
   align-items: center;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    background: $white-highlight;
+  }
 }
 
 .activate {
-  background: red;
+  background: $dark-highlight;
+  color: $background-color;
+  &:hover {
+    background-color: $dark-highlight;
+  }
 }

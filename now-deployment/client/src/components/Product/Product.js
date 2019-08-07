@@ -16,7 +16,7 @@ const Product = ({ product, currentProductId, setCurrentProductId }) => {
 
   return (
     <div
-      className='product'
+      className={'product ' + (focussed ? 'selected' : null)}
       key={product._id}
       // onClick={() => handleFocus(index)}
     >
@@ -33,7 +33,7 @@ const Product = ({ product, currentProductId, setCurrentProductId }) => {
           <p className='price'>$ {product.currentPrice}</p>
         </div>
       </HighLightBox>
-      <DeleteBtn />
+      <DeleteBtn display={focussed} />
     </div>
   );
 };

@@ -1,6 +1,26 @@
+@import '../../styles/variables.scss';
 .product {
   display: flex;
   align-items: center;
+
+  margin-bottom: 0.8em;
+  .text {
+    padding: 10px 1.2vw;
+  }
+
+  .price {
+    margin-top: 0.3em;
+  }
+}
+
+.product.selected {
+  .text {
+    color: $background-color;
+    .short-name {
+      font-weight: 300;
+      font-style: italic;
+    }
+  }
 }
 
 .text .short-name {

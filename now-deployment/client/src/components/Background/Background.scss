@@ -1,0 +1,21 @@
+@import '../../styles/variables.scss';
+
+.big-eye {
+  position: absolute;
+  top: -25%;
+  left: -5%;
+  z-index: -1;
+  font-size: 90vh;
+  color: $white-highlight;
+  transform: rotate(10deg);
+}
+
+.small-eye {
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  z-index: -1;
+  font-size: 60vh;
+  color: $white-highlight;
+  transform: rotate(-20deg);
+}

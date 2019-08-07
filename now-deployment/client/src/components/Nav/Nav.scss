@@ -1,0 +1,38 @@
+@import '../../styles/variables.scss';
+@import '../../styles/helpers.scss';
+
+nav {
+  flex: 0.3;
+}
+
+.hamburger {
+  padding: 15px 20px 20px 20px;
+  font-size: 2em;
+  color: $background-color;
+  width: 70px;
+  height: 70px;
+  cursor: pointer;
+
+  background-color: $menu-color;
+  box-shadow: 0 3px 8px #a5a5a5;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  list-style: none;
+
+  background-color: $menu-color;
+  box-shadow: 0 3px 8px #a5a5a5;
+
+  &.desktop {
+    height: 70px;
+    width: 350px;
+    justify-content: space-around;
+  }
+
+  &.mobile {
+    visibility: hidden;
+    position: absolute;
+  }
+}

@@ -4,6 +4,8 @@ import ProductList from './ProductList/ProductList';
 import Product from './Product/Product';
 
 import Loader from './Loader/Loader';
+import Background from './Background/Background';
+import Nav from './Nav/Nav';
 
 import PriceBtn from './PriceBtn/PriceBtn';
 import DeleteBtn from './DeleteBtn/DeleteBtn';
@@ -17,5 +19,7 @@ export {
   Loader,
   PriceBtn,
   TrendIcon,
-  DeleteBtn
+  DeleteBtn,
+  Background,
+  Nav
 };

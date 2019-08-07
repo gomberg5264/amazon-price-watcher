@@ -1,7 +1,9 @@
+@import '../../styles/variables.scss';
+
 .cta-price {
   display: flex;
   align-items: center;
-  background-color: #75aa53;
+  background-color: $success-color;
   margin-top: 30px;
   padding: 10px;
   width: 170px;
@@ -14,9 +16,15 @@
 
   .price {
     padding-left: 0px;
-    color: #f2f4f6;
+    color: $background-color;
     font-size: 21px;
     font-weight: 600;
     flex: 1;
+  }
+
+  .amazon-icon {
+    font-size: 2em;
+    color: $background-color;
+    margin: 2px 0 0 2px;
   }
 }
