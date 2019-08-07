@@ -1,0 +1,17 @@
+@import '../../styles/variables.scss';
+
+.trend {
+  font-size: 1.2em;
+}
+
+.success-color {
+  color: $success-color;
+}
+
+.warning-color {
+  color: $warning-color;
+}
+
+.danger-color {
+  color: $danger-color;
+}

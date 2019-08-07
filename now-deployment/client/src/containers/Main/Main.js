@@ -8,7 +8,7 @@ import Ajax from '../../utils/Ajax';
 import './Main.scss';
 
 const Main = () => {
-  const [currentProduct, setCurrentProduct] = useState(0);
+  const [currentProductId, setCurrentProductId] = useState('');
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -21,23 +21,25 @@ const Main = () => {
     fetchData();
   }, []);
 
-  const onCurrentProductChange = productId => {
-    if (productId >= 0 && productId < products.length)
-      setCurrentProduct(productId);
-  };
+  useEffect(() => {
+    if (products.length > 0) setCurrentProductId(products[0]._id);
+  }, [products]);
 
   return (
     <React.Fragment>
       <Header />
       <div className='content'>
-        {products.length > 0 ? (
-          <ProductWindow currentProduct={products[currentProduct]} />
+        {products.length > 0 && currentProductId !== '' ? (
+          <ProductWindow
+            currentProduct={products.find(p => p._id === currentProductId)}
+          />
         ) : (
           <Loader />
         )}
         <ProductList
           products={products}
-          onCurrentProductChange={onCurrentProductChange}
+          currentProductId={currentProductId}
+          setCurrentProductId={setCurrentProductId}
         />
       </div>
     </React.Fragment>

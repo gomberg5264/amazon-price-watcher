@@ -1,4 +1,13 @@
 .product {
-  margin: 1em 0 1em 0;
-  border: 2px black solid;
+  display: flex;
+  align-items: center;
+}
+
+.text .short-name {
+  width: 250px;
+  font-size: 14px;
+  font-weight: 300;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

@@ -6,5 +6,16 @@ import Product from './Product/Product';
 import Loader from './Loader/Loader';
 
 import PriceBtn from './PriceBtn/PriceBtn';
+import DeleteBtn from './DeleteBtn/DeleteBtn';
+import TrendIcon from './TrendIcon/TrendIcon';
 
-export { Header, ProductWindow, ProductList, Product, Loader, PriceBtn };
+export {
+  Header,
+  ProductWindow,
+  ProductList,
+  Product,
+  Loader,
+  PriceBtn,
+  TrendIcon,
+  DeleteBtn
+};

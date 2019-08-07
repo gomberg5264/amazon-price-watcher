@@ -1,0 +1,22 @@
+.cta-price {
+  display: flex;
+  align-items: center;
+  background-color: #75aa53;
+  margin-top: 30px;
+  padding: 10px;
+  width: 170px;
+  border-radius: 5px;
+  box-shadow: 0 3px 8px #a5a5a5;
+
+  img {
+    margin: 2px 0 0 2px;
+  }
+
+  .price {
+    padding-left: 0px;
+    color: #f2f4f6;
+    font-size: 21px;
+    font-weight: 600;
+    flex: 1;
+  }
+}

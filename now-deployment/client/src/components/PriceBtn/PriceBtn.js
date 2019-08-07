@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './PriceBtn.scss';
+
 const PriceBtn = ({ price }) => {
   return (
     <button className='cta-price'>
