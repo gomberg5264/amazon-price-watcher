@@ -27,25 +27,26 @@ function useMedia(queries, values, defaultValue) {
   return value;
 }
 
-// Hook to manage login form data and submit
-const useLoginForm = callback => {
-  const [inputs, setInputs] = useState({});
+// Custom hook for handling forms
+
+const useForm = callback => {
+  const [values, setValues] = useState({});
 
   const handleSubmit = e => {
     if (e) e.preventDefault();
+    callback();
   };
 
-  const handleInputChange = e => {
+  const handleChange = e => {
     e.persist();
-
-    setInputs(inputs => ({ ...inputs, [e.target.name]: e.target.value }));
+    setValues(values => ({ ...values, [e.target.name]: e.target.value }));
   };
 
   return {
+    handleChange,
     handleSubmit,
-    handleInputChange,
-    inputs
+    values
   };
 };
 
-export { useMedia, useLoginForm };
+export { useMedia, useForm };

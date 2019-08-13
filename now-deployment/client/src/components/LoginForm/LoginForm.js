@@ -1,18 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+
+import { useForm } from '../../utils/_hooks';
 
 const LoginForm = callback => {
+  const { values, handleChange, handleSubmit } = useForm(showValues);
+
+  function showValues() {
+    console.log(values);
+  }
+
   return (
     <div className='login-form'>
       <h2 className='login-header'>Login Here</h2>
       <label htmlFor='text' className='email'>
-        Email:{' '}
+        Email:
       </label>
-      <input type='text' className='text' placeholder='email' />
+      <input
+        type='text'
+        name='text'
+        className='input'
+        placeholder='email'
+        onChange={handleChange}
+        value={values.email}
+        required
+      />
       <label htmlFor='password' className='password'>
-        Password:{' '}
+        Password:
       </label>
-      <input type='password' className='password' />
-      <button onClick={() => handleSubmit()}>Submit</button>
+      <input
+        type='password'
+        name='password'
+        className='input'
+        onChange={handleChange}
+        value={values.password}
+        required
+      />
+      <button type='submit' onClick={handleSubmit}>
+        Submit
+      </button>
     </div>
   );
 };
