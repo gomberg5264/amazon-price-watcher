@@ -9,5 +9,6 @@ const scraperRoutes = require('./scraper.route');
 router.use('/api/users', userRoutes);
 router.use('/api/products', productRoutes);
 router.use('/api/scrape', scraperRoutes);
+router.use('/api/sessions', sessionRoutes);
 
 module.exports = router;

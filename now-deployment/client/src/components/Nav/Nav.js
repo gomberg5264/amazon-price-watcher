@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { useMedia } from '../../utils/_hooks';
 
@@ -17,10 +18,7 @@ const Nav = () => {
       </div>
       <ul className={'nav-links ' + (isMobile ? 'mobile' : 'desktop')}>
         <li className='nav-link'>
-          <a href='#'>EDIT ACCOUNT</a>
-        </li>
-        <li className='nav-link'>
-          <a href='#'>SIGN OUT</a>
+          <Link to='/'>SIGN OUT</Link>
         </li>
       </ul>
     </nav>

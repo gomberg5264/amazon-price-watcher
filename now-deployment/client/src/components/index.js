@@ -10,6 +10,7 @@ import Nav from './Nav/Nav';
 import PriceBtn from './PriceBtn/PriceBtn';
 import DeleteBtn from './DeleteBtn/DeleteBtn';
 import TrendIcon from './TrendIcon/TrendIcon';
+import NewProductForm from './NewProductForm/NewProductForm';
 
 export {
   Header,
@@ -21,5 +22,6 @@ export {
   TrendIcon,
   DeleteBtn,
   Background,
-  Nav
+  Nav,
+  NewProductForm
 };

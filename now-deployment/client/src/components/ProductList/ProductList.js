@@ -1,5 +1,5 @@
 import React from 'react';
-import { Product } from '../';
+import { Product, NewProductForm } from '../';
 
 import './ProductList.scss';
 
@@ -14,6 +14,8 @@ const ProductList = ({ products, currentProductId, setCurrentProductId }) => {
           setCurrentProductId={setCurrentProductId}
         />
       ))}
+
+      {products.length < 6 && <NewProductForm />}
     </div>
   );
 };

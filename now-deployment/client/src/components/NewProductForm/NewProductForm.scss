@@ -1,0 +1,30 @@
+@import '../../styles/variables.scss';
+
+.new-product {
+  width: 85%;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+
+  input {
+    flex: 1;
+    padding: 7px 10px 7px 20px;
+    font-size: 12px;
+
+    border: 2px solid $grey-highlight;
+    border-radius: 20px;
+    background: transparent;
+  }
+
+  button {
+    flex: 0.2;
+    font-size: 1.2em;
+    height: 1.5em;
+    margin-left: 20px;
+
+    border: none;
+    background: transparent;
+
+    color: $cta-color;
+  }
+}

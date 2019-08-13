@@ -4,10 +4,16 @@ import { TrendIcon, DeleteBtn } from '../';
 
 import { HighLightBox } from '../UX';
 
+import Ajax from '../../utils/Ajax';
+
 import './Product.scss';
 
 const Product = ({ product, currentProductId, setCurrentProductId }) => {
   const [focussed, setFocussed] = useState(false);
+
+  const onDeleteProduct = () => {
+    alert(product._id);
+  };
 
   useEffect(() => {
     if (currentProductId === product._id) setFocussed(true);
@@ -33,7 +39,11 @@ const Product = ({ product, currentProductId, setCurrentProductId }) => {
           <p className='price'>$ {product.currentPrice}</p>
         </div>
       </HighLightBox>
-      <DeleteBtn display={focussed} />
+      <DeleteBtn
+        productName={product.name}
+        onDeleteProduct={onDeleteProduct}
+        display={focussed}
+      />
     </div>
   );
 };
