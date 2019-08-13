@@ -20,6 +20,8 @@ const authenticate = async ({ email, password }) => {
       ...userDataWithoutHash,
       token
     };
+  } else {
+    return Promise.reject();
   }
 };
 

@@ -10,7 +10,10 @@ const ProductSchema = new mongoose.Schema({
   url: {
     type: String,
     required: true,
-    match: [/^https:\/\/www\.amazon\.ca\/.+\/\w{10}$/g, 'is not a valid url']
+    match: [
+      /^https:\/\/www\.amazon\.ca\/.+\/\w{10}\?.+$/g,
+      'is not a valid url'
+    ]
   },
   name: {
     type: String
