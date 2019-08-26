@@ -4,6 +4,10 @@
 const router = require('express').Router();
 const productController = require('../controllers/product.controller');
 
+const { checkAuthenticated } = require('../config/auth');
+
+router.use(checkAuthenticated);
+
 router
   .route('/')
   .get(productController.getAll)

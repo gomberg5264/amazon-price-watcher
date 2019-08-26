@@ -6,8 +6,10 @@ const userRoutes = require('./user.route');
 const productRoutes = require('./product.route');
 const scraperRoutes = require('./scraper.route');
 
-router.use('/api/users', userRoutes);
-router.use('/api/products', productRoutes);
 router.use('/api/scrape', scraperRoutes);
+
+router.use('/api/users', userRoutes);
+
+router.use('/api/products', productRoutes);
 
 module.exports = router;

@@ -7,6 +7,11 @@ const userService = require('../services/user.service');
 
 module.exports = {
   // GET
+  logout: (req, res) => {
+    req.logout();
+    res.sendStatus(200);
+  },
+
   getAll: (req, res) => {
     userService
       .getAll()
@@ -35,9 +40,10 @@ module.exports = {
     passport.authenticate('local', (err, user, info) => {
       if (err) return next(err);
       if (!user) res.json({ error: 'No user' });
+
       req.logIn(user, err => {
         if (err) return next(err);
-        res.json(req.user);
+        res.json(req.user._id);
       });
     })(req, res, next);
   },

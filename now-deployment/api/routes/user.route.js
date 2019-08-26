@@ -9,13 +9,13 @@ const { checkAuthenticated } = require('../config/auth');
 
 //router.route('/register').post(userController.register);
 router.route('/login').post(userController.authenticate);
+router.route('/logout').get(userController.logout);
 
 // Protect private routes
 
 router.use(checkAuthenticated);
 
 // PRIVATE
-router.route('/').get(userController.getAll);
 
 router
   .route('/:id')
