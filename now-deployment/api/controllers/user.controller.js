@@ -1,6 +1,8 @@
 // controllers/user.controller.js
 // Handles all CRUD operations on the User Model
 
+const passport = require('passport');
+
 const userService = require('../services/user.service');
 
 module.exports = {
@@ -29,15 +31,15 @@ module.exports = {
   },
 
   // POST
-  authenticate: (req, res) => {
-    userService
-      .authenticate(req.body)
-      .then(user =>
-        user
-          ? res.json(user)
-          : res.status(400).json({ message: 'Email or password is incorrect' })
-      )
-      .catch(err => res.status(422).json(err));
+  authenticate: (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+      if (err) return next(err);
+      if (!user) res.json({ error: 'No user' });
+      req.logIn(user, err => {
+        if (err) return next(err);
+        res.json(req.user);
+      });
+    })(req, res, next);
   },
 
   register: (req, res) => {

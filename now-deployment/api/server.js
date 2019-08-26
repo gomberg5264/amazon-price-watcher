@@ -5,8 +5,8 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-
-const jwt = require('./config/jwt');
+const session = require('express-session');
+const passport = require('passport');
 
 // Server app init
 const app = express();
@@ -22,11 +22,24 @@ app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: 'true' }));
 app.use(bodyParser.json());
 
+// Passport config
+require('./config/passport')(passport);
+
 // MongoDB Connection
 require('./config');
 
-// use JWT auth to secure the API
-//app.use(jwt());
+// Express session
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: true,
+    saveUninitialized: true
+  })
+);
+
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Endpoints
 app.use(routes);

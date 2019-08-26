@@ -3,10 +3,16 @@
 
 const router = require('express').Router();
 const userController = require('../controllers/user.controller');
+const { checkAuthenticated } = require('../config/auth');
 
 // PUBLIC
-router.route('/authenticate').post(userController.authenticate);
-router.route('/register').post(userController.register);
+
+//router.route('/register').post(userController.register);
+router.route('/login').post(userController.authenticate);
+
+// Protect private routes
+
+router.use(checkAuthenticated);
 
 // PRIVATE
 router.route('/').get(userController.getAll);

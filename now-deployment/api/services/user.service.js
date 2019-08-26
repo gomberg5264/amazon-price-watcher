@@ -3,27 +3,7 @@
 // Holds all functions used by the controller
 
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
-
-/**
- * Verifies user existence and then compares hashes, if successful generates JWT token
- * @param {Object} param0 Form Submission Data Object
- * @returns {Object} User info (without the stored hash) and generated JWT token
- */
-const authenticate = async ({ email, password }) => {
-  const user = await User.findOne({ email });
-  if (user && bcrypt.compareSync(password, user.hash)) {
-    const { hash, ...userDataWithoutHash } = user.toObject();
-    const token = jwt.sign({ sub: user.id }, process.env.JWT_SECRET);
-    return {
-      ...userDataWithoutHash,
-      token
-    };
-  } else {
-    return Promise.reject();
-  }
-};
 
 /**
  * Returns all user document in the database
@@ -63,6 +43,7 @@ const create = async userData => {
   const user = new User(userData);
 
   if (userData.password) user.hash = bcrypt.hashSync(userData.password, 10);
+  else throw 'Could not create user';
 
   return await user.save();
 };
@@ -132,8 +113,6 @@ const _remove = async id => {
 };
 
 module.exports = {
-  authenticate,
-
   getAll,
   getById,
   getProducts,
