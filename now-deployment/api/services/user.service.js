@@ -5,6 +5,8 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/user.model');
 
+const productService = require('../services/product.service');
+
 /**
  * Returns all user document in the database
  */
@@ -18,16 +20,6 @@ const getAll = async () => {
  */
 const getById = async id => {
   return await User.findById(id).select('-hash');
-};
-
-/**
- * Returns a populated array containing all watched products for a particulat user
- * @param {ObjectId} id Specific user document id
- */
-const getProducts = async id => {
-  return await User.findById(id)
-    .select('savedProducts')
-    .populate('savedProducts');
 };
 
 /**
@@ -75,15 +67,40 @@ const update = async (id, userData) => {
 };
 
 /**
+ * Removes particular user document
+ * @param {ObjectId} id User document id
+ */
+const _remove = async id => {
+  await User.findOneAndRemove(id);
+};
+
+// ================== PRODUCTS ==================
+
+/**
+ * Returns a populated array containing all watched products for a particulat user
+ * @param {ObjectId} id Specific user document id
+ */
+const getProducts = async id => {
+  return await User.findById(id)
+    .select('savedProducts')
+    .populate('savedProducts');
+};
+
+/**
  * Appends a new product id to a user's array of watched products
  * @param {ObjectId} id Specific user document id
  * @param {ObjectId} productId Specific product document id
  */
-const addProduct = async (id, productId) => {
+const addProduct = async (id, productUrl) => {
+  // Scrape given page and store data in Product collection
+  const newProduct = await productService.create(productUrl);
+  if (!newProduct) throw 'Cannot watch this product';
+
+  // Store id of new product in user's savedProducts array
   return await User.findByIdAndUpdate(
     id,
     {
-      $push: { savedProducts: productId }
+      $push: { savedProducts: newProduct._id }
     },
     { safe: true, upsert: true, new: true }
   );
@@ -95,33 +112,30 @@ const addProduct = async (id, productId) => {
  * @param {ObjectId} productId Product document id
  */
 const _removeProduct = async (id, productId) => {
-  await User.findByIdAndUpdate(
+  // Remove Product reference in savedProducts array
+  // Ensures user "owns" this product before it is removed
+  const removedProduct = await User.findByIdAndUpdate(
     id,
     {
       $pull: { savedProducts: { $in: productId } }
     },
     { new: true, safe: true }
   );
-};
 
-/**
- * Removes particular user document
- * @param {ObjectId} id User document id
- */
-const _remove = async id => {
-  await User.findOneAndRemove(id);
+  if (!removedProduct) throw 'You are not watching this product. Cannot remove';
+
+  // Remove actual Product document
+  await productService._remove(removedProduct._id);
 };
 
 module.exports = {
   getAll,
   getById,
-  getProducts,
-
   create,
-
   update,
-  addProduct,
+  _remove,
 
-  _removeProduct,
-  _remove
+  getProducts,
+  addProduct,
+  _removeProduct
 };

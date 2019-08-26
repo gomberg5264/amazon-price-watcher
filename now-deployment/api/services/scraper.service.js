@@ -33,20 +33,31 @@ const scrapeAndUpdateById = async productId => {
 };
 
 /**
- * Asyncronously scrapes the required Amazon product page and passes the data to be parsed.
+ * Updates a product document based on returned scraped data from url
  * @param {Object} product MongoDB document object for the specific product
  * @returns Updated product document
  */
 const scrapeAndUpdateProduct = async product => {
-  const hide = false;
-  const scraperUrl = hide
-    ? `http://api.scraperapi.com?api_key=${SCRAPERAPI_KEY}&url=${product.url}`
-    : product.url;
-
-  const { data } = await axios.get(scraperUrl);
-  const pageData = parseData(product.currentPrice, data);
+  const pageData = scrapeProductByUrl(product.url, product.currentPrice);
 
   return await productService.updateById(product._id, pageData);
+};
+
+/**
+ * Scrapes the given url
+ * @param {String} productUrl Amazon product url
+ * @param {Number} currentPrice Product's known urrent price. 0 if unknown
+ */
+const scrapeProductByUrl = async (productUrl, currentPrice) => {
+  const hide = false;
+  const scraperUrl = hide
+    ? `http://api.scraperapi.com?api_key=${SCRAPERAPI_KEY}&url=${productUrl}`
+    : productUrl;
+
+  const { data } = await axios.get(scraperUrl);
+  const pageData = parseData(currentPrice, data);
+
+  return pageData;
 };
 
 /**
@@ -86,5 +97,6 @@ const parseData = (oldPrice, html) => {
 
 module.exports = {
   scrapeAndUpdateAll,
-  scrapeAndUpdateById
+  scrapeAndUpdateById,
+  scrapeProductByUrl
 };

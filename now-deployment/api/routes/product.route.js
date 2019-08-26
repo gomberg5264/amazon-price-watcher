@@ -4,9 +4,9 @@
 const router = require('express').Router();
 const productController = require('../controllers/product.controller');
 
-const { checkAuthenticated } = require('../config/auth');
+const { checkAuthenticatedUser } = require('../config/auth');
 
-router.use(checkAuthenticated);
+router.use(checkAuthenticatedUser);
 
 router
   .route('/')

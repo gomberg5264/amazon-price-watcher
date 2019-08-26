@@ -8,12 +8,15 @@ const scraperService = require('../services/scraper.service');
 module.exports = {
   // GET
   getAll: (req, res) => {
+    // No endpoint
     productService
       .getAll(req.query)
       .then(products => res.status(202).json(products))
       .catch(err => res.status(422).json(err));
   },
+
   getById: (req, res) => {
+    // No endpoint
     productService
       .getById(req.params.id)
       .then(product => res.status(202).json(product))
@@ -22,8 +25,8 @@ module.exports = {
 
   // POST
   create: (req, res) => {
-    Product.create(req.body)
-      .then(newProduct => scraperService.scrapeAndUpdateById(newProduct._id))
+    productService
+      .create(req.body.url)
       .then(product => res.status(201).json(product))
       .catch(err => res.status(422).json(err));
   },
@@ -38,7 +41,8 @@ module.exports = {
 
   // DELETE
   remove: (req, res) => {
-    Product.findByIdAndRemove(req.params.id)
+    productService
+      ._remove(req.params.id)
       .then(removed => res.status(202).json(removed))
       .catch(err => res.status(422).json(err));
   }

@@ -3,7 +3,7 @@
 
 const router = require('express').Router();
 const userController = require('../controllers/user.controller');
-const { checkAuthenticated } = require('../config/auth');
+const { checkAuthenticatedUser } = require('../config/auth');
 
 // PUBLIC
 
@@ -13,7 +13,7 @@ router.route('/logout').get(userController.logout);
 
 // Protect private routes
 
-router.use(checkAuthenticated);
+router.use(checkAuthenticatedUser);
 
 // PRIVATE
 

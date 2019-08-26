@@ -6,10 +6,11 @@ const userRoutes = require('./user.route');
 const productRoutes = require('./product.route');
 const scraperRoutes = require('./scraper.route');
 
-router.use('/api/scrape', scraperRoutes);
+router.use('/api/scrape', scraperRoutes); // Endpoint should only be used by Heroku Scheduled Task
 
-router.use('/api/users', userRoutes);
+router.use('/api/users', userRoutes); // Public API
 
-router.use('/api/products', productRoutes);
+// ! Remove product endpoint as all services are used through the /user endpoint
+//router.use('/api/products', productRoutes);
 
 module.exports = router;
