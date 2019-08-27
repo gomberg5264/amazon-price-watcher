@@ -30,17 +30,19 @@ const Main = () => {
       <Header />
       <div className='content'>
         {products.length > 0 && currentProductId !== '' ? (
-          <ProductWindow
-            currentProduct={products.find(p => p._id === currentProductId)}
-          />
+          <React.Fragment>
+            <ProductWindow
+              currentProduct={products.find(p => p._id === currentProductId)}
+            />
+            <ProductList
+              products={products}
+              currentProductId={currentProductId}
+              setCurrentProductId={setCurrentProductId}
+            />
+          </React.Fragment>
         ) : (
           <Loader />
         )}
-        <ProductList
-          products={products}
-          currentProductId={currentProductId}
-          setCurrentProductId={setCurrentProductId}
-        />
       </div>
     </React.Fragment>
   );

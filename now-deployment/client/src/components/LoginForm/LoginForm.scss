@@ -1,0 +1,43 @@
+@import '../../styles/variables.scss';
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .logo {
+    font-size: 2em;
+  }
+
+  * {
+    margin: 15px 0;
+  }
+
+  input {
+    font-size: 18px;
+    padding: 10px;
+    width: 300px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #a19c9a;
+    color: #403d46;
+
+    &:focus {
+      outline: none;
+      box-shadow: none !important;
+    }
+  }
+
+  .cta-login {
+    font-size: 18px;
+    font-weight: 300;
+    margin-top: 2em;
+    color: #f2f4f6;
+    padding: 15px;
+    width: 180px;
+    align-self: flex-start;
+    background-color: #9a643e;
+    border: none;
+    box-shadow: 0 3px 8px #908c8c;
+  }
+}

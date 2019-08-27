@@ -7,10 +7,6 @@ import Loader from './Loader/Loader';
 import Background from './Background/Background';
 import Nav from './Nav/Nav';
 
-import PriceBtn from './PriceBtn/PriceBtn';
-import DeleteBtn from './DeleteBtn/DeleteBtn';
-import TrendIcon from './TrendIcon/TrendIcon';
-
 import NewProductForm from './NewProductForm/NewProductForm';
 import LoginForm from './LoginForm/LoginForm';
 
@@ -20,9 +16,6 @@ export {
   ProductList,
   Product,
   Loader,
-  PriceBtn,
-  TrendIcon,
-  DeleteBtn,
   Background,
   Nav,
   NewProductForm,

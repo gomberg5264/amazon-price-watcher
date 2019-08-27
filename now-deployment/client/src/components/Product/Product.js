@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { TrendIcon, DeleteBtn } from '../';
+import { TrendIcon, DeleteBtn } from '../../elements';
 
 import { HighLightBox } from '../UX';
 
@@ -32,7 +32,7 @@ const Product = ({ product, currentProductId, setCurrentProductId }) => {
         setCurrentProductId={setCurrentProductId}
       >
         {/* CHILDREN */}
-        <TrendIcon trend={product.priceChange} />
+        <TrendIcon trend={product.priceChange} onSale={product.onSale} />
 
         <div className='text'>
           <p className='short-name'>{product.name}</p>

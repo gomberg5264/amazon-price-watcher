@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { PriceBtn } from '../';
+import { PriceBtn } from '../../elements';
 
 import './ProductWindow.scss';
 

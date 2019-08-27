@@ -1,0 +1,22 @@
+@import '../../styles/variables.scss';
+
+.login-content {
+  display: flex;
+  width: 75%;
+  height: 90vh;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.intro {
+  flex: 0.9;
+
+  h1 {
+    font-size: 42px;
+    font-weight: 500;
+  }
+
+  p {
+    font-size: 18px;
+  }
+}

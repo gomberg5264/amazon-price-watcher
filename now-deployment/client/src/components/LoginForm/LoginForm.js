@@ -1,6 +1,10 @@
 import React from 'react';
 
 import { useForm } from '../../utils/_hooks';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
+
+import './LoginForm.scss';
 
 const LoginForm = callback => {
   const { values, handleChange, handleSubmit } = useForm(showValues);
@@ -11,32 +15,27 @@ const LoginForm = callback => {
 
   return (
     <div className='login-form'>
-      <h2 className='login-header'>Login Here</h2>
-      <label htmlFor='text' className='email'>
-        Email:
-      </label>
+      <span className='logo'>
+        <FontAwesomeIcon icon={faEye} />
+      </span>
       <input
         type='text'
         name='text'
-        className='input'
-        placeholder='email'
+        placeholder='Email'
         onChange={handleChange}
         value={values.email}
         required
       />
-      <label htmlFor='password' className='password'>
-        Password:
-      </label>
       <input
         type='password'
         name='password'
-        className='input'
+        placeholder='Password'
         onChange={handleChange}
         value={values.password}
         required
       />
-      <button type='submit' onClick={handleSubmit}>
-        Submit
+      <button class='cta-login' type='submit' onClick={handleSubmit}>
+        SIGN IN
       </button>
     </div>
   );

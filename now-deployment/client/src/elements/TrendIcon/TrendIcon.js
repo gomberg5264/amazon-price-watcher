@@ -4,16 +4,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronUp,
   faChevronDown,
-  faMinus
+  faMinus,
+  faDollarSign
 } from '@fortawesome/free-solid-svg-icons';
 
 import './TrendIcon.scss';
 
-const TrendIcon = ({ trend }) => {
+const TrendIcon = ({ trend, onSale }) => {
   let icon = undefined;
   let styleClass = '';
 
-  if (trend > 0) {
+  if (onSale) {
+    icon = faDollarSign;
+    styleClass = 'success-color';
+  } else if (trend > 0) {
     icon = faChevronUp;
     styleClass = 'danger-color';
   } else if (trend < 0) {
