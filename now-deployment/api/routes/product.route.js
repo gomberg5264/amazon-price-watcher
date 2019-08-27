@@ -6,7 +6,7 @@ const productController = require('../controllers/product.controller');
 
 const { checkAuthenticatedUser } = require('../config/auth');
 
-router.use(checkAuthenticatedUser);
+//router.use(checkAuthenticatedUser);
 
 router
   .route('/')

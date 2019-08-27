@@ -11,6 +11,6 @@ router.use('/api/scrape', scraperRoutes); // Endpoint should only be used by Her
 router.use('/api/users', userRoutes); // Public API
 
 // ! Remove product endpoint as all services are used through the /user endpoint
-//router.use('/api/products', productRoutes);
+router.use('/api/products', productRoutes);
 
 module.exports = router;

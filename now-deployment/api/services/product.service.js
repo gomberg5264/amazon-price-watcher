@@ -24,13 +24,13 @@ const create = async url => {
   // Scrape the product url
   const pageData = await scrapeProductByUrl(url);
 
-  const product = new Product(pageData);
+  const product = new Product({ url, ...pageData });
 
   return await product.save();
 };
 
 const _remove = async id => {
-  await User.findOneAndRemove(id);
+  await Product.findOneAndRemove(id);
 };
 
 module.exports = {

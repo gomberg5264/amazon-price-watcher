@@ -5,7 +5,7 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/user.model');
 
-const productService = require('../services/product.service');
+const productService = require('./product.service');
 
 /**
  * Returns all user document in the database
@@ -103,7 +103,7 @@ const addProduct = async (id, productUrl) => {
       $push: { savedProducts: newProduct._id }
     },
     { safe: true, upsert: true, new: true }
-  );
+  ).select('-hash');
 };
 
 /**
@@ -125,7 +125,7 @@ const _removeProduct = async (id, productId) => {
   if (!removedProduct) throw 'You are not watching this product. Cannot remove';
 
   // Remove actual Product document
-  await productService._remove(removedProduct._id);
+  await productService._remove(productId);
 };
 
 module.exports = {

@@ -8,6 +8,7 @@ const { checkAuthenticatedUser } = require('../config/auth');
 // PUBLIC
 
 //router.route('/register').post(userController.register);
+router.route('/verify').get(userController.verify);
 router.route('/login').post(userController.authenticate);
 router.route('/logout').get(userController.logout);
 
@@ -18,16 +19,16 @@ router.use(checkAuthenticatedUser);
 // PRIVATE
 
 router
-  .route('/:id')
+  .route('/')
   .get(userController.getById)
   .put(userController.update)
   .delete(userController.remove);
 
 router
-  .route('/:id/products')
+  .route('/products')
   .get(userController.getProducts)
-  .post(userController.appendProduct);
+  .post(userController.addProduct);
 
-router.route('/:id/products/:pid').delete(userController.removeProduct);
+router.route('/products/:pid').delete(userController.removeProduct);
 
 module.exports = router;
