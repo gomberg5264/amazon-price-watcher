@@ -4,8 +4,6 @@ import { TrendIcon, DeleteBtn } from '../../elements';
 
 import { HighLightBox } from '../UX';
 
-import Ajax from '../../utils/Ajax';
-
 import './Product.scss';
 
 const Product = ({ product, currentProductId, setCurrentProductId }) => {

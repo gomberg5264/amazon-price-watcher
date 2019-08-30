@@ -10,6 +10,8 @@ import Nav from './Nav/Nav';
 import NewProductForm from './NewProductForm/NewProductForm';
 import LoginForm from './LoginForm/LoginForm';
 
+import SecuredRoute from './SecuredRoute/SecuredRoute';
+
 export {
   Header,
   ProductWindow,
@@ -19,5 +21,6 @@ export {
   Background,
   Nav,
   NewProductForm,
-  LoginForm
+  LoginForm,
+  SecuredRoute
 };

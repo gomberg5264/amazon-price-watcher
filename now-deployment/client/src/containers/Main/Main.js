@@ -8,14 +8,15 @@ import Ajax from '../../utils/Ajax';
 import './Main.scss';
 
 const Main = () => {
+  const [loading, setLoading] = useState(true);
   const [currentProductId, setCurrentProductId] = useState('');
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
-      const response = await Ajax.getAllProducts();
-      console.log(response.data);
-      setProducts(p => response.data);
+      const response = await Ajax.getProductsByUserId();
+      setProducts(p => response.data.savedProducts);
+      setLoading(false);
     }
 
     fetchData();
@@ -29,13 +30,16 @@ const Main = () => {
     <React.Fragment>
       <Header />
       <div className='content'>
-        {products.length > 0 && currentProductId !== '' ? (
+        {!loading /*&& currentProductId !== '' ? ( */ ? (
           <React.Fragment>
-            <ProductWindow
-              currentProduct={products.find(p => p._id === currentProductId)}
-            />
+            {products.length > 0 && (
+              <ProductWindow
+                currentProduct={products.find(p => p._id === currentProductId)}
+              />
+            )}
             <ProductList
               products={products}
+              setProducts={setProducts}
               currentProductId={currentProductId}
               setCurrentProductId={setCurrentProductId}
             />

@@ -1,5 +1,9 @@
 @import '../../styles/variables.scss';
 
+.danger-color {
+  color: $danger-color;
+}
+
 .login-form {
   display: flex;
   flex-direction: column;

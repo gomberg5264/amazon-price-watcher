@@ -1,26 +1,42 @@
-import React from 'react';
-
-import { useForm } from '../../utils/_hooks';
+import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 
+import Ajax from '../../utils/Ajax';
+
 import './LoginForm.scss';
 
-const LoginForm = callback => {
-  const { values, handleChange, handleSubmit } = useForm(showValues);
+const LoginForm = props => {
+  const [values, setValues] = useState({ email: '', password: '' });
+  const [error, setError] = useState(false);
 
-  function showValues() {
-    console.log(values);
-  }
+  const handleChange = e => {
+    e.persist();
+    setValues(values => ({ ...values, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async e => {
+    if (e) e.preventDefault();
+
+    try {
+      const response = await Ajax.login(values);
+      console.log(response);
+      if (response.status === 202) props.history.push('/');
+      else setError(true);
+    } catch (err) {
+      setError(true);
+    }
+  };
 
   return (
     <div className='login-form'>
-      <span className='logo'>
+      <span className={'logo ' + (error ? 'danger-color' : '')}>
         <FontAwesomeIcon icon={faEye} />
       </span>
       <input
         type='text'
-        name='text'
+        name='email'
         placeholder='Email'
         onChange={handleChange}
         value={values.email}
@@ -34,11 +50,11 @@ const LoginForm = callback => {
         value={values.password}
         required
       />
-      <button class='cta-login' type='submit' onClick={handleSubmit}>
+      <button className='cta-login' type='submit' onClick={handleSubmit}>
         SIGN IN
       </button>
     </div>
   );
 };
 
-export default LoginForm;
+export default withRouter(LoginForm);
