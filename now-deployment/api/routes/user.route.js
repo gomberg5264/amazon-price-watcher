@@ -8,7 +8,6 @@ const { checkAuthenticatedUser } = require('../config/auth');
 // PUBLIC
 
 //router.route('/register').post(userController.register);
-router.route('/verify').get(userController.verify);
 router.route('/login').post(userController.authenticate);
 router.route('/logout').get(userController.logout);
 
@@ -17,6 +16,8 @@ router.route('/logout').get(userController.logout);
 router.use(checkAuthenticatedUser);
 
 // PRIVATE
+
+router.route('/verify').get(userController.verify);
 
 router
   .route('/')

@@ -9,7 +9,7 @@ module.exports = {
   // GET
   logout: (req, res) => {
     req.logout();
-    res.sendStatus(200);
+    res.sendStatus(204);
   },
 
   getAll: (req, res) => {
@@ -36,18 +36,18 @@ module.exports = {
   },
 
   verify: (req, res) => {
-    req.isAuthenticated() ? res.sendStatus(200) : res.sendStatus(403);
+    res.sendStatus(200);
   },
 
   // POST
   authenticate: (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
       if (err) return next(err);
-      if (!user) res.json({ error: 'No user' });
+      if (!user) return res.status(404).json({ error: 'User not found' });
 
       req.logIn(user, err => {
         if (err) return next(err);
-        res.sendStatus(200);
+        res.sendStatus(202);
       });
     })(req, res, next);
   },

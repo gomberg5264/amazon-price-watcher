@@ -23,14 +23,16 @@ const updateById = async (id, data) => {
 const create = async url => {
   // Scrape the product url
   const pageData = await scrapeProductByUrl(url);
+  if (!pageData) throw 'Cannot scrape page data';
 
   const product = new Product({ url, ...pageData });
+  if (!product) throw 'Cannot create Product Model from scraped data';
 
   return await product.save();
 };
 
 const _remove = async id => {
-  await Product.findOneAndRemove(id);
+  await Product.findByIdAndRemove(id);
 };
 
 module.exports = {

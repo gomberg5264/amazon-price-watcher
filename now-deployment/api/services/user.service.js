@@ -114,7 +114,7 @@ const addProduct = async (id, productUrl) => {
 const _removeProduct = async (id, productId) => {
   // Remove Product reference in savedProducts array
   // Ensures user "owns" this product before it is removed
-  const removedProduct = await User.findByIdAndUpdate(
+  const updatedUser = await User.findByIdAndUpdate(
     id,
     {
       $pull: { savedProducts: { $in: productId } }
@@ -122,10 +122,12 @@ const _removeProduct = async (id, productId) => {
     { new: true, safe: true }
   );
 
-  if (!removedProduct) throw 'You are not watching this product. Cannot remove';
+  if (!updatedUser) throw 'You are not watching this product. Cannot remove';
 
   // Remove actual Product document
   await productService._remove(productId);
+
+  return updatedUser;
 };
 
 module.exports = {

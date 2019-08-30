@@ -81,6 +81,8 @@ const parseData = (oldPrice, html) => {
 
   currentPrice = parseFloat(currentPrice.replace(/^\D+/g, ''));
 
+  if (!currentPrice) throw 'Cannot scrape price from the page';
+
   // Price Change
   const priceChange = oldPrice > 0 ? currentPrice - oldPrice : 0;
 
