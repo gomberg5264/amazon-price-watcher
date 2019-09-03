@@ -5,6 +5,8 @@ const passport = require('passport');
 
 const userService = require('../services/user.service');
 
+const errorHandler = require('../helpers/errorHandler');
+
 module.exports = {
   // GET
   logout: (req, res) => {
@@ -62,8 +64,9 @@ module.exports = {
   addProduct: (req, res) => {
     userService
       .addProduct(req.user.id, req.body.url)
-      .then(updatedUser => res.status(201).json(updatedUser))
-      .catch(err => res.status(422).json(err));
+      .then(updatedUser => userService.getProducts(updatedUser._id))
+      .then(userProducts => res.status(201).json(userProducts))
+      .catch(err => errorHandler(res, err));
   },
 
   // PUT
@@ -78,7 +81,8 @@ module.exports = {
   removeProduct: (req, res) => {
     userService
       ._removeProduct(req.user.id, req.params.pid)
-      .then(updatedUser => res.status(202).json(updatedUser))
+      .then(updatedUser => userService.getProducts(updatedUser._id))
+      .then(userProducts => res.status(202).json(userProducts))
       .catch(err => res.status(422).json(err));
   },
 

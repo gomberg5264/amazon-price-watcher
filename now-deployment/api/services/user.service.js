@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/user.model');
 
 const productService = require('./product.service');
+const scraperService = require('./scraper.service');
 
 /**
  * Returns all user document in the database
@@ -49,7 +50,7 @@ const update = async (id, userData) => {
   const user = await User.findById(id);
 
   // Validate
-  if (!user) throw 'User does not exist';
+  if (!user) throw new Error('User does not exist');
   if (
     user.email !== userData.email &&
     (await User.findOne({ email: userData.email }))
@@ -92,9 +93,13 @@ const getProducts = async id => {
  * @param {ObjectId} productId Specific product document id
  */
 const addProduct = async (id, productUrl) => {
+  // Scrape the product url
+  const pageData = await scraperService.scrapeProductByUrl(productUrl, 0);
+  if (!pageData) throw 'Cannot scrape page data';
+
   // Scrape given page and store data in Product collection
-  const newProduct = await productService.create(productUrl);
-  if (!newProduct) throw 'Cannot watch this product';
+  const newProduct = await productService.create(productUrl, pageData);
+  if (!newProduct) throw new Error('Cannot watch this product');
 
   // Store id of new product in user's savedProducts array
   return await User.findByIdAndUpdate(
@@ -122,7 +127,8 @@ const _removeProduct = async (id, productId) => {
     { new: true, safe: true }
   );
 
-  if (!updatedUser) throw 'You are not watching this product. Cannot remove';
+  if (!updatedUser)
+    throw new Error('You are not watching this product. Cannot remove');
 
   // Remove actual Product document
   await productService._remove(productId);

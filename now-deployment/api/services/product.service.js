@@ -2,10 +2,10 @@
 
 const Product = require('../models/product.model');
 
-const { scrapeProductByUrl } = require('./scraper.service');
+//const { scrapeProductByUrl } = require('./scraper.service');
 
-const getAll = async query => {
-  return await Product.find(query);
+const getAll = async () => {
+  return await Product.find();
 };
 
 const getById = async id => {
@@ -20,11 +20,7 @@ const updateById = async (id, data) => {
   });
 };
 
-const create = async url => {
-  // Scrape the product url
-  const pageData = await scrapeProductByUrl(url);
-  if (!pageData) throw 'Cannot scrape page data';
-
+const create = async (url, pageData) => {
   const product = new Product({ url, ...pageData });
   if (!product) throw 'Cannot create Product Model from scraped data';
 

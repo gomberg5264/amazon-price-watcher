@@ -23,7 +23,7 @@ const individualLimiter = rateLimit({
 router.use(checkScrapeKey);
 
 // Rate Limiter Middleware
-router.use('/', allLimiter);
+//router.use('/', allLimiter);
 router.use('/:pid', individualLimiter);
 
 // Endpoints

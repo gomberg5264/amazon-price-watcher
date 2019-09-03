@@ -9,8 +9,8 @@ const mongoose = require('mongoose');
 const ProductSchema = new mongoose.Schema({
   url: {
     type: String,
-    required: true,
-    match: [/^https:\/\/www\.amazon\.ca\/.+/g, 'is not a valid url']
+    required: true
+    //match: [/^https:\/\/www\.amazon\.ca\/.+/gm, 'is not a valid url']
   },
   name: {
     type: String

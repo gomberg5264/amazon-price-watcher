@@ -10,7 +10,7 @@ module.exports = {
   getAll: (req, res) => {
     // No endpoint
     productService
-      .getAll(req.query)
+      .getAll()
       .then(products => res.status(202).json(products))
       .catch(err => res.status(422).json(err));
   },

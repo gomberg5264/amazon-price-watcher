@@ -11,10 +11,19 @@ const SCRAPERAPI_KEY = process.env.SCRAPERAPI_KEY;
  * @returns Array of updated products from the database
  */
 const scrapeAndUpdateAll = async () => {
+  console.log('Entered function');
   const products = await productService.getAll();
+  console.log('products');
+  if (!products) throw new Error('Cannot retrieve all products');
+
   const asyncArray = products.map(
     async product => await scrapeAndUpdateProduct(product)
   );
+
+  console.log(asyncArray);
+
+  if (!asyncArray)
+    throw new Error('Cannot create async array of products to scrape');
 
   return await Promise.all(asyncArray);
 };
@@ -49,7 +58,7 @@ const scrapeAndUpdateProduct = async product => {
  * @param {Number} currentPrice Product's known urrent price. 0 if unknown
  */
 const scrapeProductByUrl = async (productUrl, currentPrice) => {
-  const hide = false;
+  const hide = true;
   const scraperUrl = hide
     ? `http://api.scraperapi.com?api_key=${SCRAPERAPI_KEY}&url=${productUrl}`
     : productUrl;
@@ -78,6 +87,8 @@ const parseData = (oldPrice, html) => {
   const ourPrice = $('div#price span#priceblock_ourprice').text();
   const dealPrice = $('div#price span#priceblock_dealprice').text();
   let currentPrice = dealPrice ? dealPrice : ourPrice;
+
+  console.log(currentPrice);
 
   currentPrice = parseFloat(currentPrice.replace(/^\D+/g, ''));
 
