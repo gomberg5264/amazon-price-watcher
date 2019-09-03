@@ -11,18 +11,20 @@ const ProductList = ({
 }) => {
   return (
     <div className='product-list'>
-      {products.length > 0 &&
-        products.map(product => (
-          <Product
-            key={product._id}
-            product={product}
-            currentProductId={currentProductId}
-            setCurrentProductId={setCurrentProductId}
-            setProducts={setProducts}
-          />
-        ))}
+      <div className='product-list-fixed'>
+        {products.length > 0 &&
+          products.map(product => (
+            <Product
+              key={product._id}
+              product={product}
+              currentProductId={currentProductId}
+              setCurrentProductId={setCurrentProductId}
+              setProducts={setProducts}
+            />
+          ))}
 
-      {products.length < 5 && <NewProductForm setProducts={setProducts} />}
+        {products.length < 5 && <NewProductForm setProducts={setProducts} />}
+      </div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-//require('dotenv').config();
+if (process.env.NODE_ENV === 'development') require('dotenv').config();
 
 const express = require('express');
 const helmet = require('helmet');
@@ -15,9 +15,11 @@ const routes = require('./routes');
 const PORT = process.env.PORT || 5000;
 
 // Middleware init
+app.set('trust proxy', true);
+
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: true,
     credentials: true
   })
 );
@@ -38,7 +40,8 @@ app.use(
   session({
     secret: process.env.SECRET,
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: { secure: false }
   })
 );
 
@@ -50,8 +53,12 @@ app.use(passport.session());
 app.use(routes);
 
 // Server
-module.exports = app;
-
+if (process.env.NODE_ENV === 'production') module.exports = app;
+else {
+  app.listen(PORT, () => {
+    console.log('Currently listening on port ' + PORT);
+  });
+}
 // Dev server
 // app.listen(PORT, () => {
 //   console.log('Currently listening on port ' + PORT);

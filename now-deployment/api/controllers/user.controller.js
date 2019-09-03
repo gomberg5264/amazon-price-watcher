@@ -49,7 +49,9 @@ module.exports = {
 
       req.logIn(user, err => {
         if (err) return next(err);
-        res.sendStatus(202);
+        req.session.save(() => {
+          res.sendStatus(202);
+        });
       });
     })(req, res, next);
   },

@@ -5,9 +5,11 @@
 }
 
 .login-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  .login-form-fixed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
   .logo {
     font-size: 2em;
@@ -53,9 +55,18 @@
   }
 }
 
-@media (min-width: 320px) and (max-width: 480px) {
+@media (min-width: 300px) and (max-width: 480px) {
+  .login-form {
+    margin: 5vh 0;
+    * {
+      margin: 7px 0;
+    }
+  }
   .logo {
     font-size: 12px;
-    margin-top: 4px;
+    margin-top: 0px;
+  }
+  .cta-login {
+    margin: 3em auto 0 auto;
   }
 }

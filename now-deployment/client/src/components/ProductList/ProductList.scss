@@ -3,7 +3,11 @@
   flex: 0.7;
   display: flex;
   flex-direction: column;
-  height: 10vh;
+  min-height: 0px;
+  .product-list-fixed {
+    // Safari overflow fix
+    height: 10vh;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
@@ -19,9 +23,12 @@
     max-height: 42vh;
     overflow-y: scroll;
     overflow-x: hidden;
+    .product-list-fixed {
+      min-height: 36vh;
+    }
   }
 }
-@media (min-width: 320px) and (max-width: 480px) {
+@media (min-width: 300px) and (max-width: 480px) {
   .product-list {
     margin: 2em 0;
     width: 100%;

@@ -31,28 +31,30 @@ const LoginForm = props => {
 
   return (
     <form onSubmit={handleSubmit} className='login-form'>
-      <span className={'logo ' + (error ? 'danger-color' : '')}>
-        <FontAwesomeIcon icon={faEye} />
-      </span>
-      <input
-        type='text'
-        name='email'
-        placeholder='Email'
-        onChange={handleChange}
-        value={values.email}
-        required
-      />
-      <input
-        type='password'
-        name='password'
-        placeholder='Password'
-        onChange={handleChange}
-        value={values.password}
-        required
-      />
-      <button className='cta-login' type='submit'>
-        SIGN IN
-      </button>
+      <div className='login-form-fixed'>
+        <span className={'logo ' + (error ? 'danger-color' : '')}>
+          <FontAwesomeIcon icon={faEye} />
+        </span>
+        <input
+          type='text'
+          name='email'
+          placeholder='Email'
+          onChange={handleChange}
+          value={values.email}
+          required
+        />
+        <input
+          type='password'
+          name='password'
+          placeholder='Password'
+          onChange={handleChange}
+          value={values.password}
+          required
+        />
+        <button className='cta-login' type='submit'>
+          SIGN IN
+        </button>
+      </div>
     </form>
   );
 };
