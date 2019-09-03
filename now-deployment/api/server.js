@@ -1,4 +1,4 @@
-require('dotenv').config();
+//require('dotenv').config();
 
 const express = require('express');
 const helmet = require('helmet');
@@ -49,7 +49,10 @@ app.use(passport.session());
 // Endpoints
 app.use(routes);
 
+// Server
+module.exports = app;
+
 // Dev server
-app.listen(PORT, () => {
-  console.log('Currently listening on port ' + PORT);
-});
+// app.listen(PORT, () => {
+//   console.log('Currently listening on port ' + PORT);
+// });

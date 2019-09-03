@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "name": "apw",
+  "public": false,
+  "builds": [
+    {
+      "src": "/api/server.js",
+      "use": "@now/node"
+    },
+    {
+      "src": "/client/package.json",
+      "use": "@now/static-build",
+      "config": { "distDir": "build" }
+    }
+  ],
+  "env": {
+    "MONGODB_URI": "@my-mongo-uri",
+    "SCRAPERAPI_KEY": "@my-scraperapi-key",
+    "SECRET": "@my-secret",
+    "SCRAPE_KEY": "@my-scrape-key"
+  },
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/server.js" },
+    { "src": "^/static/(.*)", "dest": "/client/static/$1" },
+    { "src": "^/favicon.ico", "dest": "/client/favicon.ico" },
+    { "src": "/(.*)", "dest": "/client/index.html" }
+  ]
+}
