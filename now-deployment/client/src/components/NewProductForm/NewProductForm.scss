@@ -14,6 +14,14 @@
     border: 2px solid $grey-highlight;
     border-radius: 20px;
     background: transparent;
+
+    &.danger-error {
+      border-color: $danger-color;
+    }
+
+    &.warning-error {
+      border-color: $warning-color;
+    }
   }
 
   button {
@@ -26,5 +34,44 @@
     background: transparent;
 
     color: $cta-color;
+
+    &.valid {
+      color: $success-color;
+    }
+  }
+
+  .spinner-div {
+    padding-left: 20px;
+    color: $success-color;
+
+    .rotate-center {
+      -webkit-animation: rotate-center 2s linear infinite both;
+      animation: rotate-center 2s linear infinite both;
+      /**
+ * ----------------------------------------
+ * animation rotate-center
+ * ----------------------------------------
+ */
+      @-webkit-keyframes rotate-center {
+        0% {
+          -webkit-transform: rotate(0);
+          transform: rotate(0);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes rotate-center {
+        0% {
+          -webkit-transform: rotate(0);
+          transform: rotate(0);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+    }
   }
 }

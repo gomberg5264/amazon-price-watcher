@@ -18,10 +18,11 @@ const ProductList = ({
             product={product}
             currentProductId={currentProductId}
             setCurrentProductId={setCurrentProductId}
+            setProducts={setProducts}
           />
         ))}
 
-      {products.length < 6 && <NewProductForm setProducts={setProducts} />}
+      {products.length < 5 && <NewProductForm setProducts={setProducts} />}
     </div>
   );
 };

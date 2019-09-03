@@ -5,18 +5,6 @@ nav {
   flex: 0.3;
 }
 
-.hamburger {
-  padding: 15px 20px 20px 20px;
-  font-size: 2em;
-  color: $background-color;
-  width: 70px;
-  height: 70px;
-  cursor: pointer;
-
-  background-color: $menu-color;
-  box-shadow: 0 3px 8px #a5a5a5;
-}
-
 .nav-links {
   display: flex;
   align-items: center;
@@ -25,14 +13,23 @@ nav {
   background-color: $menu-color;
   box-shadow: 0 3px 8px #a5a5a5;
 
-  &.desktop {
-    height: 70px;
-    width: 150px;
+  height: 70px;
+
+  font-size: 18px;
+
+  .nav-link {
+    width: 100%;
+    text-align: center;
     justify-content: space-around;
   }
 
-  &.mobile {
-    visibility: hidden;
-    position: absolute;
+  .mobile {
+    font-size: 1.2em;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  nav {
+    flex: 0.3;
   }
 }

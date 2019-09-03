@@ -28,3 +28,17 @@
     margin: 2px 0 0 2px;
   }
 }
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .cta-price {
+    margin-top: 1em;
+    padding: 5px 10px;
+    width: 120px;
+    .price {
+      font-size: 17px;
+    }
+    .amazon-icon {
+      width: 1em;
+    }
+  }
+}

@@ -7,14 +7,15 @@ import '../../styles/_helpers.scss';
 import './DeleteBtn.scss';
 
 const DeleteBtn = ({ productName, display, onDeleteProduct }) => {
-  const handleClick = () => {
+  const handleClick = e => {
+    e.preventDefault();
     if (window.confirm(`${productName} will now no longer be watched`))
       onDeleteProduct();
   };
 
   return (
     <button
-      onClick={() => handleClick()}
+      onClick={handleClick}
       className={'cta-remove ' + (display ? 'display-block' : 'display-none')}
     >
       <FontAwesomeIcon icon={faTrashAlt} />

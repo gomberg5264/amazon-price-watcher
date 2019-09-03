@@ -23,19 +23,26 @@ const Main = () => {
   }, []);
 
   useEffect(() => {
-    if (products.length > 0) setCurrentProductId(products[0]._id);
+    if (products.length > 0) {
+      setCurrentProductId(products[0]._id);
+    } else {
+      setCurrentProductId('');
+      console.log(products.length);
+    }
   }, [products]);
 
   return (
     <React.Fragment>
       <Header />
       <div className='content'>
-        {!loading /*&& currentProductId !== '' ? ( */ ? (
+        {!loading ? (
           <React.Fragment>
-            {products.length > 0 && (
+            {products.length > 0 && currentProductId !== '' ? (
               <ProductWindow
                 currentProduct={products.find(p => p._id === currentProductId)}
               />
+            ) : (
+              <h3>No products being watched...</h3>
             )}
             <ProductList
               products={products}

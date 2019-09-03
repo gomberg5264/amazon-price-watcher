@@ -17,3 +17,15 @@
     background-color: $dark-highlight;
   }
 }
+
+@media (min-width: 481px) and (max-width: 767px) {
+  .highlight-box {
+    padding: 5px 20px;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .highlight-box {
+    border-radius: 0 5px 5px 0;
+  }
+}

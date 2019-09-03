@@ -5,3 +5,32 @@
     font-weight: 300;
   }
 }
+
+/* ====== MEDIA QUERIES ====== */
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .product-window {
+    flex: 0.8;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .product-window {
+    flex: 0.8;
+  }
+}
+
+@media (max-width: 767px) {
+  .product-window {
+    padding: 0 3em;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .product-window {
+    padding: 0 1.2em;
+  }
+  .product-window .title {
+    font-size: 14px;
+  }
+}

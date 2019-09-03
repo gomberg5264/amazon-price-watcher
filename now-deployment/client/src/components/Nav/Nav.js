@@ -4,25 +4,36 @@ import { Link } from 'react-router-dom';
 import { useMedia } from '../../utils/_hooks';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 import './Nav.scss';
+
+import Ajax from '../../utils/Ajax';
 
 const Nav = () => {
   const isMobile = useMedia(['(max-width: 769px)'], [true], false);
 
-  const handleSignOut = () => {
-    console.log('Logged out.... jk.... unless');
+  const handleSignOut = async () => {
+    try {
+      await Ajax.logout();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <nav>
-      <div className={'hamburger ' + (!isMobile ? 'display-none' : '')}>
-        <FontAwesomeIcon icon={faBars} />
-      </div>
-      <ul className={'nav-links ' + (isMobile ? 'mobile' : 'desktop')}>
+      <ul className='nav-links'>
         <li className='nav-link'>
-          <Link to='/'>SIGN OUT</Link>
+          <Link onClick={handleSignOut} to='/login'>
+            {!isMobile ? (
+              <span className='desktop'>SIGN OUT</span>
+            ) : (
+              <span className='mobile'>
+                <FontAwesomeIcon icon={faSignOutAlt} />
+              </span>
+            )}
+          </Link>
         </li>
       </ul>
     </nav>

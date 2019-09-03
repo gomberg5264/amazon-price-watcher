@@ -20,3 +20,21 @@
     font-size: 18px;
   }
 }
+
+@media (max-width: 767px) {
+  .login-content {
+    flex-direction: column;
+  }
+  .intro {
+    flex: 0.2;
+    margin-top: 9vh;
+    text-align: center;
+    h1 {
+      font-size: 36px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
+}

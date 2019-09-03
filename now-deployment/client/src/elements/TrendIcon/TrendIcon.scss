@@ -17,3 +17,10 @@
 .danger-color {
   color: $danger-color;
 }
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .trend {
+    width: 1.3em;
+    padding: 10px 0.8vw;
+  }
+}

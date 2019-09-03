@@ -6,11 +6,28 @@ import { HighLightBox } from '../UX';
 
 import './Product.scss';
 
-const Product = ({ product, currentProductId, setCurrentProductId }) => {
+import Ajax from '../../utils/Ajax';
+
+const Product = ({
+  product,
+  currentProductId,
+  setCurrentProductId,
+  setProducts
+}) => {
   const [focussed, setFocussed] = useState(false);
 
-  const onDeleteProduct = () => {
-    alert(product._id);
+  const onDeleteProduct = async () => {
+    try {
+      const response = await Ajax.removeProduct(product._id);
+      if (response.status === 202) {
+        setCurrentProductId('');
+        setProducts(response.data.savedProducts);
+      } else throw new Error(response);
+    } catch (err) {
+      alert(
+        'Sorry, something prevented the product from being removed from your watch list'
+      );
+    }
   };
 
   useEffect(() => {
@@ -22,7 +39,6 @@ const Product = ({ product, currentProductId, setCurrentProductId }) => {
     <div
       className={'product ' + (focussed ? 'selected' : null)}
       key={product._id}
-      // onClick={() => handleFocus(index)}
     >
       <HighLightBox
         isFocussed={focussed}

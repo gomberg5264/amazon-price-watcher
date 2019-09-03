@@ -45,3 +45,17 @@
     box-shadow: 0 3px 8px #908c8c;
   }
 }
+
+@media (max-width: 767px) {
+  .login-form {
+    flex: 1;
+    margin-top: 3em;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .logo {
+    font-size: 12px;
+    margin-top: 4px;
+  }
+}

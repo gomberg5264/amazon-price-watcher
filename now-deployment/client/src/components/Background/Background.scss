@@ -19,3 +19,9 @@
   color: $white-highlight;
   transform: rotate(-20deg);
 }
+
+@media (max-width: 767px) {
+  .small-eye {
+    display: none;
+  }
+}

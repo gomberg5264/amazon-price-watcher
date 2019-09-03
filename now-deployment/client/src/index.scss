@@ -44,3 +44,9 @@ input:focus {
     color: transparent;
   }
 }
+
+@media (max-width: 767px) {
+  body {
+    overflow-y: scroll;
+  }
+}

@@ -6,3 +6,15 @@
   color: $danger-color;
   font-size: 1em;
 }
+
+@media (min-width: 481px) and (max-width: 767px) {
+  .cta-remove {
+    margin-left: 1em;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .cta-remove {
+    padding-left: 0em;
+  }
+}

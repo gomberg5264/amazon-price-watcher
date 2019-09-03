@@ -30,7 +30,7 @@ const LoginForm = props => {
   };
 
   return (
-    <div className='login-form'>
+    <form onSubmit={handleSubmit} className='login-form'>
       <span className={'logo ' + (error ? 'danger-color' : '')}>
         <FontAwesomeIcon icon={faEye} />
       </span>
@@ -50,10 +50,10 @@ const LoginForm = props => {
         value={values.password}
         required
       />
-      <button className='cta-login' type='submit' onClick={handleSubmit}>
+      <button className='cta-login' type='submit'>
         SIGN IN
       </button>
-    </div>
+    </form>
   );
 };
 
