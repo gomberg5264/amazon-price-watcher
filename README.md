@@ -1,5 +1,7 @@
 # Price Watching Application for Amazon Products
 
+Find the app at: https://apw.locrian24.now.sh
+
 ## Important Notes
 
 This project is for completely personal use. The code in this repo is for illustrative purposes to show how I set up this application.
@@ -11,13 +13,7 @@ I have still implemented a user structure into the database, etc. but this was c
 
 ## TO DO:
 
-- Master collection of all watched products or array of nested product documents in user document? Master list grants ease of iteration
-  and ensured uniqueness of each product but both the reference ID and the document must be removed when a product is removed from a user's
-  private watchlist. **Currently allowing duplicate products in the master product list**
-
-- Move product.service from promise-based to await/async (personal choice)
-
-- Create script that will be run by Heroku Scheduler (POST request to /api/scrape)
+- Heroku Scheduler app
 
 ## Implementation
 
