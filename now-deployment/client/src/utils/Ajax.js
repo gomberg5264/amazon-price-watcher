@@ -2,7 +2,7 @@ import axios from 'axios';
 
 axios.defaults.withCredentials = true; // ! IMPORTANT
 
-const preUrl = 'http://localhost:5000';
+const preUrl = '';
 
 export default {
   // Authentication/Passport Endpoints

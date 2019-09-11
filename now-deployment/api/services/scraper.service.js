@@ -11,15 +11,15 @@ const SCRAPERAPI_KEY = process.env.SCRAPERAPI_KEY;
  * @returns Array of updated products from the database
  */
 const scrapeAndUpdateAll = async () => {
-  console.log('Entered function');
   const products = await productService.getAll();
-  console.log('products');
+  console.log(products);
   if (!products) throw new Error('Cannot retrieve all products');
 
   const asyncArray = products.map(
     async product => await scrapeAndUpdateProduct(product)
   );
 
+  console.log('===========');
   console.log(asyncArray);
 
   if (!asyncArray)
@@ -47,7 +47,7 @@ const scrapeAndUpdateById = async productId => {
  * @returns Updated product document
  */
 const scrapeAndUpdateProduct = async product => {
-  const pageData = scrapeProductByUrl(product.url, product.currentPrice);
+  const pageData = await scrapeProductByUrl(product.url, product.currentPrice);
 
   return await productService.updateById(product._id, pageData);
 };
@@ -65,6 +65,8 @@ const scrapeProductByUrl = async (productUrl, currentPrice) => {
 
   const { data } = await axios.get(scraperUrl);
   const pageData = parseData(currentPrice, data);
+
+  console.log(pageData);
 
   return pageData;
 };
