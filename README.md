@@ -2,6 +2,8 @@
 
 Find the app at: https://apw.locrian24.now.sh
 
+Contact me via locrian24@gmail.com if you would like access to the dummy account :)
+
 ## Important Notes
 
 This project is for completely personal use. The code in this repo is for illustrative purposes to show how I set up this application.
