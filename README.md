@@ -6,7 +6,7 @@ Contact me via locrian24@gmail.com if you would like access to the dummy account
 
 For those here to look, this is what the app looks like past the login:
 
-
+![alt text](https://github.com/Locrian24/amazon-price-watcher/blob/master/apw.png "APW Screenshot")
 
 ## Important Notes
 
