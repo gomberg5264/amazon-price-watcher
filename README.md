@@ -2,6 +2,12 @@
 
 Find the app at: https://apw.locrian24.now.sh
 
+Contact me via locrian24@gmail.com if you would like access to the dummy account :)
+
+For those here to look, this is what the app looks like past the login:
+
+![alt text](https://github.com/Locrian24/amazon-price-watcher/blob/master/apw.png "APW Screenshot")
+
 ## Important Notes
 
 This project is for completely personal use. The code in this repo is for illustrative purposes to show how I set up this application.
@@ -10,10 +16,6 @@ Also due to the limits of ScraperAPI's Free Plan (only 1000 requests/month), all
 having to limit the app's use (e.g. 5 concurrent users would have to be limited to a max of 5-6 watched items, assuming daily updates).
 
 I have still implemented a user structure into the database, etc. but this was completely for learning purposes.
-
-## TO DO:
-
-- Heroku Scheduler app
 
 ## Implementation
 
@@ -27,118 +29,5 @@ I have still implemented a user structure into the database, etc. but this was c
 
 4. Heroku Scheduler is utilised on a Heroku deployment to make sure all products are scraped daily (12:00am UTC). The "scraper" dir holds all scripts currently on the Heroku deployment
 
-#### To Be Determined:
+5. The application is secured with session-based authentication implemented with Passport.js
 
-## Schemas
-
-### Users
-
-```json
-{
-  "email": {
-    "type": String,
-    "lowercase": true,
-    "unique": true,
-    "required": [true, "can't be blank"],
-    "match": [/\S+@\S+\.\S+/, "is invalid"]
-  },
-  "hash": {
-    "type": String,
-    "required": true
-  },
-  "enableAlert": {
-    "type": Boolean,
-    "required": true
-  },
-  "savedProducts": [
-    {
-      "type": mongoose.Schema.Types.ObjectId,
-      "ref": "Product",
-      "default": []
-    }
-  ]
-}
-```
-
-Each user's document stores the document ID (\_id) of each product currently being watched by that User. The array is then iterated through to collect the
-relevant list of products for the user.
-
-### Products
-
-```json
-{
-  "url": {
-    "type": String,
-    "required": true,
-    "match": [/^https:\/\/www\.amazon\.ca\/.+\/\w{10}$/g, "is not a valid url"]
-  },
-  "name": {
-    "type": String
-  },
-  "currentPrice": {
-    "type": Number,
-    "default": 0
-  },
-  "priceChange": {
-    "type": Number
-  },
-  "onSale": {
-    "type": Boolean
-  }
-}
-```
-
-All product documents will be iterated over by the scraper and updated to store not only the current selling price but the recent change in price and if
-it is included in any deal going on.
-
-**Important:** Currently allowing duplicate product documents (MUST DEPRECATE)
-
-## Routes/Endpoints
-
-#### /api/users/
-
-- _/authenticate_
-
-  - **POST**: Authenticate a login request
-
-- _/register_
-
-  - **POST**: Create a user document
-
-- _/:id_
-
-  - **GET**: Return the JSON of a specific user
-  - **PUT**: Update user data
-  - **DELETE**: Delete a specific user
-
-- _/:id/products_
-
-  - **GET**: Return list of all saved products (populated from IDs)
-  - **POST**: Save ID of new product to watch
-
-- _/:id/products/:pid_
-  - **DELETE**: Remove the product ID from list of saved products\*
-
-#### /api/products/
-
-- _/_
-
-  - **GET**: Used to return all currently watched products
-  - **POST**: Create a new watched product doc
-
-- _/:id_
-  - **GET**: Return a specific product (used to show user's personal product list)
-  - **PUT**: Update values for a specific product
-  - **DELETE**: Delete a specific product that is being watched\*
-
-\* -> Both must be used when a watched item is removed from a user's list.
-
-#### /api/scrape
-
-- _/_
-
-  - **POST**: Pinged by scheduled task to updated all watched product documents
-
-- _/:id_
-
-  - **POST**: Refresh a specific product document
